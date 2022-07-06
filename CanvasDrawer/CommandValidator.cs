@@ -14,5 +14,15 @@ namespace CanvasDrawer
             var regex = new Regex(@"C \d+ \d+");
             return regex.IsMatch(command);
         }
+
+        public bool IsDrawingCommandValid(string? command)
+        {
+            if (string.IsNullOrEmpty(command))
+            {
+                return false;
+            }
+
+            return false;
+        }
     }
 }

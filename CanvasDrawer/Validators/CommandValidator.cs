@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace CanvasDrawer
+namespace CanvasDrawer.Validators
 {
     public class CommandValidator : ICommandValidator
     {

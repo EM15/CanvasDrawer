@@ -1,3 +1,4 @@
+using CanvasDrawer.Validators;
 using Xunit;
 
 namespace CanvasDrawer.Tests

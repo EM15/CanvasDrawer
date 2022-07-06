@@ -1,17 +1,20 @@
-﻿using CanvasDrawer.Drawings;
-using System.Drawing;
+﻿using CanvasDrawer.Creators;
+using CanvasDrawer.Drawings;
+using CanvasDrawer.Validators;
 
 namespace CanvasDrawer
 {
     internal class ProgramExecutor
     {
         private readonly ICommandValidator commandValidator;
+        private readonly IDrawingCreator drawingCreator;
         private readonly IDrawer drawer;
         private Canvas? canvas;
 
-        public ProgramExecutor(ICommandValidator commandValidator, IDrawer drawer)
+        public ProgramExecutor(ICommandValidator commandValidator, IDrawingCreator drawingCreator, IDrawer drawer)
         {
             this.commandValidator = commandValidator;
+            this.drawingCreator = drawingCreator;
             this.drawer = drawer;
         }
 
@@ -28,7 +31,7 @@ namespace CanvasDrawer
                     continue;
                 }
 
-                canvas = new Canvas(command!);
+                canvas = drawingCreator.CreateCanvas(command!);
                 drawer.Draw(canvas);
             }
         }

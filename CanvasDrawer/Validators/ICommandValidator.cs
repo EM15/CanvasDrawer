@@ -1,4 +1,4 @@
-﻿namespace CanvasDrawer
+﻿namespace CanvasDrawer.Validators
 {
     public interface ICommandValidator
     {

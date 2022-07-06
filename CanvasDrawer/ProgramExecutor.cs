@@ -1,15 +1,18 @@
-﻿using System.Drawing;
+﻿using CanvasDrawer.Drawings;
+using System.Drawing;
 
 namespace CanvasDrawer
 {
     internal class ProgramExecutor
     {
         private readonly ICommandValidator commandValidator;
-        private Rectangle? canvas;
+        private readonly IDrawer drawer;
+        private Canvas? canvas;
 
-        public ProgramExecutor(ICommandValidator commandValidator)
+        public ProgramExecutor(ICommandValidator commandValidator, IDrawer drawer)
         {
             this.commandValidator = commandValidator;
+            this.drawer = drawer;
         }
 
         public void ReadCanvas()
@@ -25,8 +28,8 @@ namespace CanvasDrawer
                     continue;
                 }
 
-                // TODO: Extract width, height
-                canvas = new Rectangle();
+                canvas = new Canvas(command!);
+                drawer.Draw(canvas);
             }
         }
 

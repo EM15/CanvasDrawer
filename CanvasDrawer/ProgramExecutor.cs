@@ -32,7 +32,19 @@ namespace CanvasDrawer
 
         public void ReadCommand()
         {
-            throw new NotImplementedException();
+            var command = Console.ReadLine();
+            while(command != "Q")
+            {
+                var isValid = commandValidator.IsDrawingCommandValid(command);
+                if (!isValid)
+                {
+                    Console.WriteLine("Incorrect command");
+                    command = Console.ReadLine();
+                    continue;
+                }
+
+                command = Console.ReadLine();
+            }
         }
     }
 }

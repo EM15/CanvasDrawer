@@ -1,4 +1,5 @@
 ﻿using CanvasDrawer.Creators;
+using System;
 using Xunit;
 
 namespace CanvasDrawer.Tests
@@ -8,7 +9,7 @@ namespace CanvasDrawer.Tests
         private readonly DrawingCreator drawingCreator = new DrawingCreator();
 
         [Fact]
-        public void CanvasValuesShouldBeSetCorrectly()
+        public void CreateCanvasShouldSetCorrectValues()
         {
             var command = "C 20 30";
             var canvas = drawingCreator.CreateCanvas(command);
@@ -17,14 +18,33 @@ namespace CanvasDrawer.Tests
         }
 
         [Fact]
-        public void LineValuesShouldBeSetCorrectly()
+        public void CreateDiagonalLineShouldThrowAnException()
         {
             var command = "L 20 30 40 50";
+            var exception = Assert.Throws<ArgumentException>(() => drawingCreator.CreateLine(command));
+            Assert.Equal("Only vertical and horizontal lines are allowed", exception.Message);
+        }
+
+        [Fact]
+        public void CreateHorizontalLineShouldSetCorrectValues()
+        {
+            var command = "L 20 30 20 40";
+            var line = drawingCreator.CreateLine(command);
+            Assert.True(line.X1 == 20);
+            Assert.True(line.Y1 == 30);
+            Assert.True(line.X2 == 20);
+            Assert.True(line.Y2 == 40);
+        }
+
+        [Fact]
+        public void CreateVerticalLineShouldSetCorrectValues()
+        {
+            var command = "L 20 30 40 30";
             var line = drawingCreator.CreateLine(command);
             Assert.True(line.X1 == 20);
             Assert.True(line.Y1 == 30);
             Assert.True(line.X2 == 40);
-            Assert.True(line.Y2 == 50);
+            Assert.True(line.Y2 == 30);
         }
 
         [Fact]

@@ -20,14 +20,14 @@ namespace CanvasDrawer
 
         public void ReadCanvas()
         {
-            Console.WriteLine("Create a new Canvas with the following command: \"C w h\" where 'w' is width and 'h' is height");
+            Console.WriteLine("Create a new Canvas");
             while (canvas is null)
             {
                 var command = Console.ReadLine();
                 var isValid = commandValidator.IsCanvasCommandValid(command);
                 if (!isValid)
                 {
-                    Console.WriteLine("Incorrect command");
+                    ShowInvalidCommandMessage();
                     continue;
                 }
 
@@ -36,21 +36,50 @@ namespace CanvasDrawer
             }
         }
 
-        public void ReadCommand()
+        public void ReadCommands()
         {
+            Console.WriteLine("Draw on the canvas");
             var command = Console.ReadLine();
-            while(command != "Q")
+            while (command != "Q")
             {
                 var isValid = commandValidator.IsDrawingCommandValid(command);
                 if (!isValid)
                 {
-                    Console.WriteLine("Incorrect command");
+                    ShowInvalidCommandMessage();
                     command = Console.ReadLine();
                     continue;
                 }
 
+                CreateDrawing(command!);
                 command = Console.ReadLine();
             }
         }
+
+        private void CreateDrawing(string command)
+        {
+            try
+            {
+                var firstCommandLetter = command.First();
+                switch (firstCommandLetter)
+                {
+                    case 'L':
+                        var line = drawingCreator.CreateLine(command);
+                        drawer.Draw(line);
+                        break;
+                    case 'R':
+                        var rectangle = drawingCreator.CreateRectangle(command);
+                        drawer.Draw(rectangle);
+                        break;
+                    case 'B':
+                        throw new NotImplementedException("Bucket fill was not implemented yet");
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        private void ShowInvalidCommandMessage() => Console.WriteLine("InvalidCommand");
     }
 }

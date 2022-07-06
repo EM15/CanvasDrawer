@@ -32,5 +32,15 @@ namespace CanvasDrawer
 
             Console.Write(output.ToString());
         }
+
+        public void Draw(Line line)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Draw(Rectangle rectangle)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

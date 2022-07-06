@@ -12,4 +12,4 @@ var serviceProvider = new ServiceCollection()
 
 var programExecutor = serviceProvider.GetService<ProgramExecutor>()!;
 programExecutor.ReadCanvas();
-programExecutor.ReadCommand();
+programExecutor.ReadCommands();

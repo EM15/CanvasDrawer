@@ -11,7 +11,7 @@ namespace CanvasDrawer
                 return false;
             }
 
-            var regex = new Regex(@"C \d+ \d+");
+            var regex = new Regex(@"^C \d+ \d+$");
             return regex.IsMatch(command);
         }
 
@@ -22,7 +22,13 @@ namespace CanvasDrawer
                 return false;
             }
 
-            return false;
+            var lineRegex = new Regex(@"^L \d+ \d+ \d+ \d+$");
+            var rectangleRegex = new Regex(@"^R \d+ \d+ \d+ \d+$");
+            var filledAreaRegex = new Regex(@"^B \d+ \d+ .$");
+
+            return lineRegex.IsMatch(command)
+                || rectangleRegex.IsMatch(command)
+                || filledAreaRegex.IsMatch(command);
         }
     }
 }

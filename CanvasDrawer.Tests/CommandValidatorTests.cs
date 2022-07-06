@@ -30,7 +30,7 @@ namespace CanvasDrawer.Tests
                 "C 20",
                 "C  30",
                 "A",
-                "C 20 -30",
+                "aC 20 30",
                 "C -20 30",
                 "A 20 30"
             };
@@ -75,18 +75,20 @@ namespace CanvasDrawer.Tests
                 "L 20 30",
                 "L 20 30 40",
                 "L 20 30 40 -50",
+                "aL 20 30 40 50 c",
                 "R 20",
                 "R 20 30",
                 "R 20 30 10",
                 "R 20 30 10 -50",
+                "aR 20 30 10 50 c",
                 "B 20",
                 "B 20 30",
-                "B 20 -30 c"
+                "aB 20 30 cc"
             };
 
             foreach (var command in commands)
             {
-                var isValid = commandValidator.IsCanvasCommandValid(command);
+                var isValid = commandValidator.IsDrawingCommandValid(command);
                 Assert.False(isValid);
             }
         }
@@ -95,7 +97,7 @@ namespace CanvasDrawer.Tests
         public void CorrectDrawingLineCommandShouldBeValid()
         {
             var command = "L 20 30 40 50";
-            var isValid = commandValidator.IsCanvasCommandValid(command);
+            var isValid = commandValidator.IsDrawingCommandValid(command);
             Assert.True(isValid);
         }
 
@@ -103,7 +105,7 @@ namespace CanvasDrawer.Tests
         public void CorrectDrawingRectangleCommandShouldBeValid()
         {
             var command = "R 10 20 30 40";
-            var isValid = commandValidator.IsCanvasCommandValid(command);
+            var isValid = commandValidator.IsDrawingCommandValid(command);
             Assert.True(isValid);
         }
 
@@ -111,7 +113,7 @@ namespace CanvasDrawer.Tests
         public void CorrectDrawingColourCommandShouldBeValid()
         {
             var command = "B 20 30 c";
-            var isValid = commandValidator.IsCanvasCommandValid(command);
+            var isValid = commandValidator.IsDrawingCommandValid(command);
             Assert.True(isValid);
         }
     }

@@ -14,15 +14,19 @@ namespace CanvasDrawer
 
         public void ReadCanvas()
         {
-            Console.WriteLine("Create a new Canvas with the following command: C w h");
+            Console.WriteLine("Create a new Canvas with the following command: \"C w h\" where 'w' is width and 'h' is height");
             while (canvas is null)
             {
                 var command = Console.ReadLine();
-                if (commandValidator.IsCanvasCommandValid(command))
+                var isValid = commandValidator.IsCanvasCommandValid(command);
+                if (!isValid)
                 {
-                    // TODO: Extract width, height
-                    canvas = new Rectangle();
+                    Console.WriteLine("Incorrect command");
+                    continue;
                 }
+
+                // TODO: Extract width, height
+                canvas = new Rectangle();
             }
         }
 

@@ -35,7 +35,7 @@ namespace CanvasDrawer
                 }
 
                 canvas = figureCreator.CreateCanvas(command!);
-                drawer.Draw(canvas.Value);
+                drawer.DrawCanvas(canvas.Value);
             }
         }
 

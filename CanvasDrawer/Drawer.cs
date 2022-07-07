@@ -6,9 +6,11 @@ namespace CanvasDrawer
     {
         private const string canvasTopBottomDelimiter = "-";
         private const string canvasLeftRightDelimiter = "|";
+        private const string emptySpace = " ";
+        private const string figureBorder = "x";
         private string[,]? output;
 
-        private void CreateCanvas(Rectangle canvas)
+        public void DrawCanvas(Rectangle canvas)
         {
             output = new string[canvas.Height + 2, canvas.Width + 2];
             var yLength = output.GetLength(0);
@@ -31,34 +33,37 @@ namespace CanvasDrawer
                         continue;
                     }
 
-                    output[y, x] = " ";
+                    output[y, x] = emptySpace;
                 }
             }
-        }
 
-        private void AddFigureToOutput(Rectangle figure)
-        {
-            for (int y = figure.Top; y <= figure.Bottom; y++)
-            {
-                for (int x = figure.Left; x <= figure.Right; x++)
-                {
-                    output[y, x] = "x";
-                }
-            }
+            WriteOutput();
         }
 
         public void Draw(Rectangle figure)
         {
+            AddFigureToOutput(figure);
+            WriteOutput();
+        }
+
+        private void AddFigureToOutput(Rectangle figure)
+        {
             if (output is null)
             {
-                CreateCanvas(figure);
-            }
-            else
-            {
-                AddFigureToOutput(figure);
+                throw new Exception("Canvas was not initialized");
             }
 
-            WriteOutput();
+            for (int x = figure.Left; x <= figure.Right; x++)
+            {
+                for (int y = figure.Top; y <= figure.Bottom; y++)
+                {
+                    var isRectangleBorderPosition = x == figure.Left || x == figure.Right || y == figure.Bottom || y == figure.Top;
+                    if (isRectangleBorderPosition)
+                    {
+                        output[y, x] = figureBorder;
+                    }
+                }
+            }
         }
 
         private void WriteOutput()

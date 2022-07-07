@@ -13,6 +13,8 @@ namespace CanvasDrawer.Tests
         {
             var command = "C 20 30";
             var canvas = figureCreator.CreateCanvas(command);
+            Assert.True(canvas.X == 1);
+            Assert.True(canvas.Y == 1);
             Assert.True(canvas.Width == 20);
             Assert.True(canvas.Height == 30);
         }

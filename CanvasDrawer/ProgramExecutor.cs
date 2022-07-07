@@ -22,10 +22,10 @@ namespace CanvasDrawer
 
         public void ReadCanvas()
         {
-            Console.WriteLine("Create a new Canvas");
+            System.Console.WriteLine("Create a new Canvas");
             while (canvas is null)
             {
-                var command = Console.ReadLine();
+                var command = System.Console.ReadLine();
                 var isValid = commandValidator.IsCanvasCommandValid(command);
                 if (!isValid)
                 {
@@ -57,7 +57,7 @@ namespace CanvasDrawer
                 }
                 catch(Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    System.Console.WriteLine(ex.Message);
                 }
                 finally
                 {
@@ -89,7 +89,7 @@ namespace CanvasDrawer
             }
             else
             {
-                Console.WriteLine("Point to apply Color is outside Canvas");
+                System.Console.WriteLine("Point to apply Color is outside Canvas");
             }
         }
 
@@ -102,16 +102,16 @@ namespace CanvasDrawer
             } 
             else
             {
-                Console.WriteLine("Figure is outside canvas");
+                System.Console.WriteLine("Figure is outside canvas");
             }
         }
 
         private string? GetDrawnOnCanvasCommand()
         {
-            Console.WriteLine("Draw on the canvas");
-            return Console.ReadLine();
+            System.Console.WriteLine("Draw on the canvas");
+            return System.Console.ReadLine();
         }
 
-        private void ShowInvalidCommandMessage() => Console.WriteLine("Invalid command");
+        private void ShowInvalidCommandMessage() => System.Console.WriteLine("Invalid command");
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.Drawing;
+﻿using CanvasDrawer.Console;
+using System.Drawing;
+using System.Text;
 
 namespace CanvasDrawer
 {
@@ -8,7 +10,13 @@ namespace CanvasDrawer
         private const char canvasLeftRightDelimiter = '|';
         private const char emptySpace = ' ';
         private const char figureBorder = 'x';
+        private readonly IConsoleWriter consoleWriter;
         private char[,]? output;
+
+        public Drawer(IConsoleWriter consoleWriter)
+        {
+            this.consoleWriter = consoleWriter;
+        }
 
         public void DrawCanvas(Rectangle canvas)
         {
@@ -42,16 +50,17 @@ namespace CanvasDrawer
 
         public void Draw(Rectangle figure)
         {
+            CheckIfCanvasInitializedOrThrow();
             AddFigureToOutput(figure);
             WriteOutput();
         }
 
         public void ApplyBucketFill(Point point, char color)
         {
+            CheckIfCanvasInitializedOrThrow();
             var initialValue = output[point.Y, point.X];
             TryApplyColorInAllDirections(point, color, initialValue);
             WriteOutput();
-
         }
 
         private void TryApplyColorInAllDirections(Point point, char color, char initialValue)
@@ -93,13 +102,25 @@ namespace CanvasDrawer
 
         private void WriteOutput()
         {
+            var sbOutput = new StringBuilder();
+
             for (int y = 0; y < output.GetLength(0); y++)
             {
                 for (int x = 0; x < output.GetLength(1); x++)
                 {
-                    Console.Write(output[y, x]);
+                    sbOutput.Append(output[y, x]);
                 }
-                Console.WriteLine();
+                sbOutput.AppendLine();
+            }
+
+            consoleWriter.Write(sbOutput.ToString());
+        }
+
+        private void CheckIfCanvasInitializedOrThrow()
+        {
+            if (output is null)
+            {
+                throw new InvalidOperationException("Canvas was not initialized");
             }
         }
     }

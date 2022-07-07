@@ -35,7 +35,7 @@ namespace CanvasDrawer
                 }
 
                 canvas = figureCreator.CreateCanvas(command!);
-                drawer.DrawCanvas(canvas.Value);
+                drawer.Draw(canvas.Value);
             }
         }
 
@@ -74,7 +74,7 @@ namespace CanvasDrawer
             if (canFigureBeDrawn)
             {
                 drawings.Add(figure);
-                drawer.Draw(canvas.Value, drawings);
+                drawer.Draw(figure);
             } 
             else
             {

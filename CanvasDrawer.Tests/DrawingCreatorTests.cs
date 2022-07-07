@@ -21,8 +21,7 @@ namespace CanvasDrawer.Tests
         public void CreateDiagonalLineShouldThrowAnException()
         {
             var command = "L 20 30 40 50";
-            var exception = Assert.Throws<ArgumentException>(() => drawingCreator.CreateLine(command));
-            Assert.Equal("Only vertical and horizontal lines are allowed", exception.Message);
+            Assert.Throws<ArgumentException>(() => drawingCreator.CreateLine(command));
         }
 
         [Fact]
@@ -52,10 +51,31 @@ namespace CanvasDrawer.Tests
         {
             var command = "R 20 30 40 50";
             var rectangle = drawingCreator.CreateRectangle(command);
-            Assert.True(rectangle.X1 == 20);
-            Assert.True(rectangle.Y1 == 30);
-            Assert.True(rectangle.X2 == 40);
-            Assert.True(rectangle.Y2 == 50);
+            Assert.True(rectangle.Left == 20);
+            Assert.True(rectangle.Top == 30);
+            Assert.True(rectangle.Right == 40);
+            Assert.True(rectangle.Bottom == 50);
+        }
+
+        [Fact]
+        public void CreateRectangleWithRightUpperCornerFirstShuldThrowAnExpcetion()
+        {
+            var command = "R 40 30 20 50";
+            Assert.Throws<ArgumentException>(() => drawingCreator.CreateRectangle(command));
+        }
+
+        [Fact]
+        public void CreateRectangleWithRightLowerCornerFirstShuldThrowAnExpcetion()
+        {
+            var command = "R 40 50 20 30";
+            Assert.Throws<ArgumentException>(() => drawingCreator.CreateRectangle(command));
+        }
+
+        [Fact]
+        public void CreateRectangleWithLeftLowerCornerFirstShuldThrowAnExpcetion()
+        {
+            var command = "R 20 50 40 30";
+            Assert.Throws<ArgumentException>(() => drawingCreator.CreateRectangle(command));
         }
     }
 }

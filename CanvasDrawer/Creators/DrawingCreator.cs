@@ -1,4 +1,5 @@
 ﻿using CanvasDrawer.Drawings;
+using System.Drawing;
 using System.Text.RegularExpressions;
 
 namespace CanvasDrawer.Creators
@@ -23,6 +24,12 @@ namespace CanvasDrawer.Creators
             var y1 = Convert.ToInt32(matches[1].Value);
             var x2 = Convert.ToInt32(matches[2].Value);
             var y2 = Convert.ToInt32(matches[3].Value);
+
+            if (x1 != x2 && y1 != y2)
+            {
+                throw new ArgumentException("Only vertical and horizontal lines are allowed");
+            }
+
             return new Line(x1, y1, x2, y2);
         }
 
@@ -34,7 +41,13 @@ namespace CanvasDrawer.Creators
             var y1 = Convert.ToInt32(matches[1].Value);
             var x2 = Convert.ToInt32(matches[2].Value);
             var y2 = Convert.ToInt32(matches[3].Value);
-            return new Rectangle(x1, y1, x2, y2);
+
+            if (x1 >= x2 || y1 >= y2)
+            {
+                throw new ArgumentException("(x1, y1) must be upper left corner. (x2, y2) must be lower right corner");
+            }
+
+            return new Rectangle(x1, y1, x2 - x1, y2 - y1);
         }
 
     }

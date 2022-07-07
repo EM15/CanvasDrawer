@@ -1,12 +1,16 @@
 ﻿using CanvasDrawer.Drawings;
+using System.Drawing;
 using System.Text;
 
 namespace CanvasDrawer
 {
     public class Drawer : IDrawer
     {
+        private Canvas? currentCanvas { get; set; }
+
         public void Draw(Canvas canvas)
         {
+            currentCanvas = canvas;
             var output = new StringBuilder();
             for (int i = 0; i < canvas.Width + 2; i++)
             {
@@ -30,12 +34,32 @@ namespace CanvasDrawer
             }
             output.Append(Environment.NewLine);
 
-            Console.Write(output.ToString());
+            Console.WriteLine(output.ToString());
+        }
+
+        private void DrawCurrentCanvas()
+        {
+            
         }
 
         public void Draw(Line line)
         {
-            throw new NotImplementedException();
+            var startPosition = Console.GetCursorPosition();
+
+            DrawCurrentCanvas();
+
+            for (int i = 0; i < line.Length; i++)
+            {
+                if (line.IsHorizontal)
+                {
+                    Console.SetCursorPosition(startPosition.Left + 1 + i, startPosition.Top + 1);
+                }
+                else
+                {
+                    Console.SetCursorPosition(startPosition.Left + 1, startPosition.Top + i + 1);
+                }
+                Console.Write("x");
+            }
         }
 
         public void Draw(Rectangle rectangle)

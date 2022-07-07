@@ -14,10 +14,12 @@ namespace CanvasDrawer
         private readonly IDrawer drawer;
         private readonly IConsoleReader consoleReader;
         private readonly IConsoleWriter consoleWriter;
+        private readonly IEnvironment environment;
         private Rectangle? canvas;
+        private const string exitCommand = "Q";
 
         public Executor(ICommandValidator commandValidator, IFigureCreator figureCreator, IDrawingValidator drawingValidator,
-            IDrawer drawer, IConsoleReader consoleReader, IConsoleWriter consoleWriter)
+            IDrawer drawer, IConsoleReader consoleReader, IConsoleWriter consoleWriter, IEnvironment environment)
         {
             this.commandValidator = commandValidator;
             this.figureCreator = figureCreator;
@@ -25,6 +27,7 @@ namespace CanvasDrawer
             this.drawer = drawer;
             this.consoleReader = consoleReader;
             this.consoleWriter = consoleWriter;
+            this.environment = environment;
         }
 
         public void ReadCanvasCommand()
@@ -33,6 +36,11 @@ namespace CanvasDrawer
             while (canvas is null)
             {
                 var command = consoleReader.ReadLine();
+                if (command == exitCommand)
+                {
+                    break;
+                }
+
                 var isValid = commandValidator.IsCanvasCommandValid(command);
                 if (!isValid)
                 {
@@ -43,12 +51,14 @@ namespace CanvasDrawer
                 canvas = figureCreator.CreateCanvas(command!);
                 drawer.DrawCanvas(canvas.Value);
             }
+
+            environment.ExitProgram();
         }
 
         public void ReadDrawingCommands()
         {
             var command = GetDrawnOnCanvasCommand();
-            while (command != "Q")
+            while (command != exitCommand)
             {
                 var isValid = commandValidator.IsDrawingCommandValid(command);
                 if (!isValid)
@@ -71,6 +81,8 @@ namespace CanvasDrawer
                     command = GetDrawnOnCanvasCommand();
                 }
             }
+
+            environment.ExitProgram();
         }
 
         private void TryDrawFigureOrColor(string command)
@@ -89,8 +101,7 @@ namespace CanvasDrawer
 
         private void TryApplyBucketFill(Point point, char color)
         {
-            var isBucketFillPointInsideCanvas = drawingValidator.IsBucketFillPointInsideCanvas(canvas.Value, point);
-            if (isBucketFillPointInsideCanvas)
+            if (canvas != null && drawingValidator.IsBucketFillPointInsideCanvas(canvas.Value, point))
             {
                 drawer.ApplyBucketFill(point, color);
             }
@@ -102,11 +113,10 @@ namespace CanvasDrawer
 
         private void TryToDraw(Rectangle figure)
         {
-            var canFigureBeDrawn = drawingValidator.CanFigureBeDrawnInsideCanvas(canvas.Value, figure);
-            if (canFigureBeDrawn)
+            if (canvas != null && drawingValidator.CanFigureBeDrawnInsideCanvas(canvas.Value, figure))
             {
                 drawer.Draw(figure);
-            } 
+            }
             else
             {
                 consoleWriter.WriteLine("Figure is outside canvas");

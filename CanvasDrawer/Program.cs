@@ -12,6 +12,7 @@ var serviceProvider = new ServiceCollection()
     .AddSingleton<IDrawer, Drawer>()
     .AddSingleton<IConsoleWriter, ConsoleWriter>()
     .AddSingleton<IConsoleReader, ConsoleReader>()
+    .AddSingleton<IEnvironment, CanvasDrawer.Console.Environment>()
     .AddSingleton<Executor>()
     .BuildServiceProvider();
 

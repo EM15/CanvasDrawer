@@ -6,5 +6,6 @@ namespace CanvasDrawer
     {
         void DrawCanvas(Rectangle canvas);
         void Draw(Rectangle figure);
+        void ApplyBucketFill(Point point, char color);
     }
 }

@@ -9,5 +9,10 @@ namespace CanvasDrawer.Validators
             var figureIsInsideCanvas = canvas.Contains(figureToBeDrawn);
             return figureIsInsideCanvas;
         }
+
+        public bool IsBucketFillPointInsideCanvas(Rectangle canvas, Point point)
+        {
+            return canvas.Contains(point);
+        }
     }
 }

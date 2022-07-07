@@ -46,13 +46,37 @@ namespace CanvasDrawer
             WriteOutput();
         }
 
+        public void ApplyBucketFill(Point point, char color)
+        {
+            var valueOnPoint = output[point.Y, point.X];
+
+            //TryApplyColorLeft()
+            //output[point.Y, point.X] = 
+            
+        }
+
+        private void TryApplyColorLeft()
+        {
+
+        }
+
+        private void TryApplyColorRight()
+        {
+
+        }
+
+        private void TryApplyColorTop()
+        {
+
+        }
+
+        private void TryApplyColorBottom()
+        {
+
+        }
+
         private void AddFigureToOutput(Rectangle figure)
         {
-            if (output is null)
-            {
-                throw new Exception("Canvas was not initialized");
-            }
-
             for (int x = figure.Left; x <= figure.Right; x++)
             {
                 for (int y = figure.Top; y <= figure.Bottom; y++)
@@ -68,16 +92,13 @@ namespace CanvasDrawer
 
         private void WriteOutput()
         {
-            if (output != null)
+            for (int x = 0; x < output.GetLength(0); x++)
             {
-                for (int x = 0; x < output.GetLength(0); x++)
+                for (int y = 0; y < output.GetLength(1); y++)
                 {
-                    for (int y = 0; y < output.GetLength(1); y++)
-                    {
-                        Console.Write(output[x, y]);
-                    }
-                    Console.WriteLine();
+                    Console.Write(output[x, y]);
                 }
+                Console.WriteLine();
             }
         }
     }

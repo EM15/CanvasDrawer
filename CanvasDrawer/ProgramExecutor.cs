@@ -11,7 +11,6 @@ namespace CanvasDrawer
         private readonly IDrawingValidator drawingValidator;
         private readonly IDrawer drawer;
         private Rectangle? canvas;
-        private IList<Rectangle> drawings = new List<Rectangle>();
 
         public ProgramExecutor(ICommandValidator commandValidator, IFigureCreator figureCreator, IDrawingValidator drawingValidator, IDrawer drawer)
         {
@@ -54,8 +53,7 @@ namespace CanvasDrawer
 
                 try
                 {
-                    var figure = figureCreator.CreateFigure(command!);
-                    TryToDraw(figure);
+                    TryDrawFigureOrColor(command!);
                 }
                 catch(Exception ex)
                 {
@@ -68,12 +66,38 @@ namespace CanvasDrawer
             }
         }
 
-        public void TryToDraw(Rectangle figure)
+        public void TryDrawFigureOrColor(string command)
+        {
+            if (command.StartsWith("B"))
+            {
+                var (position, color) = figureCreator.CreateBucketFill(command);
+                drawer.ApplyBucketFill(position, color);
+            }
+            else
+            {
+                var figure = figureCreator.CreateFigure(command!);
+                TryToDraw(figure);
+            }
+        }
+
+        private void TryApplyBucketFill(Point point, char color)
+        {
+            var isBucketFillPointInsideCanvas = drawingValidator.IsBucketFillPointInsideCanvas(canvas.Value, point);
+            if (isBucketFillPointInsideCanvas)
+            {
+                drawer.ApplyBucketFill(point, color);
+            }
+            else
+            {
+                Console.WriteLine("Point to apply Color is outside Canvas");
+            }
+        }
+
+        private void TryToDraw(Rectangle figure)
         {
             var canFigureBeDrawn = drawingValidator.CanFigureBeDrawnInsideCanvas(canvas.Value, figure);
             if (canFigureBeDrawn)
             {
-                drawings.Add(figure);
                 drawer.Draw(figure);
             } 
             else

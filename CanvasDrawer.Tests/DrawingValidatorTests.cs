@@ -31,9 +31,27 @@ namespace CanvasDrawer.Tests
         public void DrawFigureInsideCanvasShouldBeValid()
         {
             var canvas = new Rectangle(0, 0, 10, 10);
-            var line = new Rectangle(0, 0, 5, 5);
-            var canBeDrawn = drawingValidator.CanFigureBeDrawnInsideCanvas(canvas, line);
+            var figure = new Rectangle(0, 0, 5, 5);
+            var canBeDrawn = drawingValidator.CanFigureBeDrawnInsideCanvas(canvas, figure);
             Assert.True(canBeDrawn);
+        }
+
+        [Fact]
+        public void ApplyBucketFillOutsideCanvasShouldBeInvalid()
+        {
+            var canvas = new Rectangle(0, 0, 10, 10);
+            var point = new Point(10, 10);
+            var isBucketFillPointInsideCanvas = drawingValidator.IsBucketFillPointInsideCanvas(canvas, point);
+            Assert.False(isBucketFillPointInsideCanvas);
+        }
+
+        [Fact]
+        public void ApplyBucketFillOutsideCanvasShouldBeValid()
+        {
+            var canvas = new Rectangle(0, 0, 10, 10);
+            var point = new Point(9, 9);
+            var isBucketFillPointInsideCanvas = drawingValidator.IsBucketFillPointInsideCanvas(canvas, point);
+            Assert.True(isBucketFillPointInsideCanvas);
         }
     }
 }

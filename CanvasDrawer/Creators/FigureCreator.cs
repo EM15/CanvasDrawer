@@ -14,6 +14,17 @@ namespace CanvasDrawer.Creators
             return new Rectangle(1, 1, width, height);
         }
 
+        public (Point position, char color) CreateBucketFill(string command)
+        {
+            var regex = new Regex(@"\d+");
+            var matches = regex.Matches(command);
+            var x = Convert.ToInt32(matches[0].Value);
+            var y = Convert.ToInt32(matches[1].Value);
+            var color = command.Last();
+
+            return (new Point(x, y), color);
+        }
+
         public Rectangle CreateFigure(string command)
         {
             var regex = new Regex(@"\d+");

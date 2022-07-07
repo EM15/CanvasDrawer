@@ -48,5 +48,75 @@ namespace CanvasDrawer.Tests
             var color = 'c';
             Assert.Throws<InvalidOperationException>(() => drawer.ApplyBucketFill(point, color));
         }
+
+        [Fact]
+        public void DrawFigureShouldBeDrawnCorretly()
+        {
+            var canvas = new Rectangle(1, 1, 4, 4);
+            drawer.DrawCanvas(canvas);
+            Fake.ClearRecordedCalls(fakeConsoleWriter);
+
+            var figure = new Rectangle(1, 1, 2, 2);
+            var outputSb = new StringBuilder();
+            outputSb.AppendLine("------");
+            outputSb.AppendLine("|xxx |");
+            outputSb.AppendLine("|x x |");
+            outputSb.AppendLine("|xxx |");
+            outputSb.AppendLine("|    |");
+            outputSb.AppendLine("------");
+
+            drawer.Draw(figure);
+            A.CallTo(() => fakeConsoleWriter.Write(outputSb.ToString())).MustHaveHappenedOnceExactly();
+        }
+
+        [Fact]
+        public void BucketFillShouldBeAppliedCorretly()
+        {
+            var canvas = new Rectangle(1, 1, 4, 4);
+            drawer.DrawCanvas(canvas);
+
+            var figure = new Rectangle(1, 2, 2, 2);
+            drawer.Draw(figure);
+            Fake.ClearRecordedCalls(fakeConsoleWriter);
+
+            var point = new Point(1, 1);
+            var color = 'c';
+
+            var outputSb = new StringBuilder();
+            outputSb.AppendLine("------");
+            outputSb.AppendLine("|cccc|");
+            outputSb.AppendLine("|xxxc|");
+            outputSb.AppendLine("|x xc|");
+            outputSb.AppendLine("|xxxc|");
+            outputSb.AppendLine("------");
+
+            drawer.ApplyBucketFill(point, color);
+            A.CallTo(() => fakeConsoleWriter.Write(outputSb.ToString())).MustHaveHappenedOnceExactly();
+        }
+
+        [Fact]
+        public void BucketFillToAFigureShouldBeAppliedCorretly()
+        {
+            var canvas = new Rectangle(1, 1, 4, 4);
+            drawer.DrawCanvas(canvas);
+
+            var figure = new Rectangle(1, 2, 2, 2);
+            drawer.Draw(figure);
+            Fake.ClearRecordedCalls(fakeConsoleWriter);
+
+            var point = new Point(1, 2);
+            var color = 'c';
+
+            var outputSb = new StringBuilder();
+            outputSb.AppendLine("------");
+            outputSb.AppendLine("|    |");
+            outputSb.AppendLine("|ccc |");
+            outputSb.AppendLine("|c c |");
+            outputSb.AppendLine("|ccc |");
+            outputSb.AppendLine("------");
+
+            drawer.ApplyBucketFill(point, color);
+            A.CallTo(() => fakeConsoleWriter.Write(outputSb.ToString())).MustHaveHappenedOnceExactly();
+        }
     }
 }

@@ -36,8 +36,6 @@ namespace CanvasDrawer
         public void Draw(Rectangle canvas, IEnumerable<Rectangle> figures)
         {
             var startPosition = Console.GetCursorPosition();
-            startPosition.Left++;
-            startPosition.Top++;
 
             DrawCanvas(canvas);
 

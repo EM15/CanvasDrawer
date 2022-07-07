@@ -56,7 +56,6 @@ namespace CanvasDrawer
                 {
                     var figure = figureCreator.CreateFigure(command!);
                     TryToDraw(figure);
-                    command = GetDrawnOnCanvasCommand();
                 }
                 catch(Exception ex)
                 {

@@ -6,7 +6,7 @@ This project solves a Code Challenge. The instructions can be find here: [Tech C
 
 ## Comments
 
-TODO:
+Following the example from the instructions, upper left corner (x1, y1) is (1, 1) and not (0, 0);
 
 ## Installation
 

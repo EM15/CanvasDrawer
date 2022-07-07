@@ -11,8 +11,7 @@ namespace CanvasDrawer.Creators
             var matches = regex.Matches(command);
             var width = Convert.ToInt32(matches[0].Value);
             var height = Convert.ToInt32(matches[1].Value);
-
-            return new Rectangle(0, 0, width, height);
+            return new Rectangle(1, 1, width, height);
         }
 
         public Rectangle CreateFigure(string command)

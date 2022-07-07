@@ -10,6 +10,7 @@ namespace CanvasDrawer
         private readonly IDrawingCreator drawingCreator;
         private readonly IDrawer drawer;
         private Rectangle? canvas;
+        private IList<Rectangle> drawings = new List<Rectangle>();
 
         public ProgramExecutor(ICommandValidator commandValidator, IDrawingCreator drawingCreator, IDrawer drawer)
         {
@@ -51,7 +52,8 @@ namespace CanvasDrawer
                 }
 
                 var drawing = drawingCreator.CreateDrawing(command!);
-                drawer.Draw(canvas.Value, drawing);
+                drawings.Add(drawing);
+                drawer.Draw(canvas.Value, drawings);
 
                 ShowDrawOnCanvasMessage();
                 command = Console.ReadLine();

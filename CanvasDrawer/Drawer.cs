@@ -33,28 +33,38 @@ namespace CanvasDrawer
             Console.WriteLine(output.ToString());
         }
 
-        public void Draw(Rectangle canvas, Rectangle rectangle)
+        public void Draw(Rectangle canvas, IEnumerable<Rectangle> drawings)
         {
             var startPosition = Console.GetCursorPosition();
+            startPosition.Left++;
+            startPosition.Top++;
 
             DrawCanvas(canvas);
 
             var endPosition = Console.GetCursorPosition();
 
-            for (int xPos = rectangle.Left; xPos <= rectangle.Right ; xPos++)
+            foreach (var drawing in drawings)
+            {
+                DrawFigure(startPosition, drawing);
+            }
+
+            Console.SetCursorPosition(endPosition.Left, endPosition.Top);
+        }
+
+        private void DrawFigure((int Left, int Top) canvasStartPosition, Rectangle rectangle)
+        {
+            for (int xPos = rectangle.Left; xPos <= rectangle.Right; xPos++)
             {
                 for (int yPos = rectangle.Top; yPos <= rectangle.Bottom; yPos++)
                 {
                     var isRectangleBorderPosition = xPos == rectangle.Left || xPos == rectangle.Right || yPos == rectangle.Bottom || yPos == rectangle.Top;
                     if (isRectangleBorderPosition)
                     {
-                        Console.SetCursorPosition(startPosition.Left + xPos, startPosition.Top + yPos);
+                        Console.SetCursorPosition(canvasStartPosition.Left + xPos, canvasStartPosition.Top + yPos);
                         Console.Write("x");
                     }
                 }
             }
-
-            Console.SetCursorPosition(endPosition.Left, endPosition.Top);
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace CanvasDrawer
 {
-    internal class Executor
+    public class Executor
     {
         private readonly ICommandValidator commandValidator;
         private readonly IFigureCreator figureCreator;
@@ -16,8 +16,8 @@ namespace CanvasDrawer
         private readonly IConsoleWriter consoleWriter;
         private Rectangle? canvas;
 
-        public Executor(ICommandValidator commandValidator, IFigureCreator figureCreator, IDrawingValidator drawingValidator, IDrawer drawer,
-            IConsoleReader consoleReader, IConsoleWriter consoleWriter)
+        public Executor(ICommandValidator commandValidator, IFigureCreator figureCreator, IDrawingValidator drawingValidator,
+            IDrawer drawer, IConsoleReader consoleReader, IConsoleWriter consoleWriter)
         {
             this.commandValidator = commandValidator;
             this.figureCreator = figureCreator;
@@ -73,7 +73,7 @@ namespace CanvasDrawer
             }
         }
 
-        public void TryDrawFigureOrColor(string command)
+        private void TryDrawFigureOrColor(string command)
         {
             if (command.StartsWith("B"))
             {

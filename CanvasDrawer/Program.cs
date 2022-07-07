@@ -5,7 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 
 var serviceProvider = new ServiceCollection()
     .AddSingleton<ICommandValidator, CommandValidator>()
-    .AddSingleton<IDrawingCreator, DrawingCreator>()
+    .AddSingleton<IFigureCreator, FigureCreator>()
+    .AddSingleton<IDrawingValidator, DrawingValidator>()
     .AddSingleton<IDrawer, Drawer>()
     .AddSingleton<ProgramExecutor>()
     .BuildServiceProvider();

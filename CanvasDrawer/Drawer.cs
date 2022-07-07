@@ -33,7 +33,7 @@ namespace CanvasDrawer
             Console.WriteLine(output.ToString());
         }
 
-        public void Draw(Rectangle canvas, IEnumerable<Rectangle> drawings)
+        public void Draw(Rectangle canvas, IEnumerable<Rectangle> figures)
         {
             var startPosition = Console.GetCursorPosition();
             startPosition.Left++;
@@ -43,21 +43,21 @@ namespace CanvasDrawer
 
             var endPosition = Console.GetCursorPosition();
 
-            foreach (var drawing in drawings)
+            foreach (var figure in figures)
             {
-                DrawFigure(startPosition, drawing);
+                DrawFigure(startPosition, figure);
             }
 
             Console.SetCursorPosition(endPosition.Left, endPosition.Top);
         }
 
-        private void DrawFigure((int Left, int Top) canvasStartPosition, Rectangle rectangle)
+        private void DrawFigure((int Left, int Top) canvasStartPosition, Rectangle figure)
         {
-            for (int xPos = rectangle.Left; xPos <= rectangle.Right; xPos++)
+            for (int xPos = figure.Left; xPos <= figure.Right; xPos++)
             {
-                for (int yPos = rectangle.Top; yPos <= rectangle.Bottom; yPos++)
+                for (int yPos = figure.Top; yPos <= figure.Bottom; yPos++)
                 {
-                    var isRectangleBorderPosition = xPos == rectangle.Left || xPos == rectangle.Right || yPos == rectangle.Bottom || yPos == rectangle.Top;
+                    var isRectangleBorderPosition = xPos == figure.Left || xPos == figure.Right || yPos == figure.Bottom || yPos == figure.Top;
                     if (isRectangleBorderPosition)
                     {
                         Console.SetCursorPosition(canvasStartPosition.Left + xPos, canvasStartPosition.Top + yPos);

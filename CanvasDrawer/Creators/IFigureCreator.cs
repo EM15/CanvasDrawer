@@ -2,7 +2,7 @@
 
 namespace CanvasDrawer.Creators
 {
-    public interface IDrawingCreator
+    public interface IFigureCreator
     {
         Rectangle CreateCanvas(string command);
         Rectangle CreateDrawing(string command);

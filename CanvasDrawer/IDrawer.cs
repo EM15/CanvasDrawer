@@ -5,6 +5,6 @@ namespace CanvasDrawer
     public interface IDrawer
     {
         void DrawCanvas(Rectangle canvas);
-        void Draw(Rectangle canvas, IEnumerable<Rectangle> rectangle);
+        void Draw(Rectangle canvas, IEnumerable<Rectangle> figure);
     }
 }

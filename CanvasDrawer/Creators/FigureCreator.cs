@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace CanvasDrawer.Creators
 {
-    public class DrawingCreator : IDrawingCreator
+    public class FigureCreator : IFigureCreator
     {
         public Rectangle CreateCanvas(string command)
         {

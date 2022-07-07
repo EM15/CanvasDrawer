@@ -7,15 +7,15 @@ namespace CanvasDrawer
     internal class ProgramExecutor
     {
         private readonly ICommandValidator commandValidator;
-        private readonly IDrawingCreator drawingCreator;
+        private readonly IFigureCreator figureCreator;
         private readonly IDrawer drawer;
         private Rectangle? canvas;
         private IList<Rectangle> drawings = new List<Rectangle>();
 
-        public ProgramExecutor(ICommandValidator commandValidator, IDrawingCreator drawingCreator, IDrawer drawer)
+        public ProgramExecutor(ICommandValidator commandValidator, IFigureCreator figureCreator, IDrawer drawer)
         {
             this.commandValidator = commandValidator;
-            this.drawingCreator = drawingCreator;
+            this.figureCreator = figureCreator;
             this.drawer = drawer;
         }
 
@@ -32,7 +32,7 @@ namespace CanvasDrawer
                     continue;
                 }
 
-                canvas = drawingCreator.CreateCanvas(command!);
+                canvas = figureCreator.CreateCanvas(command!);
                 drawer.DrawCanvas(canvas.Value);
             }
         }
@@ -51,7 +51,7 @@ namespace CanvasDrawer
                     continue;
                 }
 
-                var drawing = drawingCreator.CreateDrawing(command!);
+                var drawing = figureCreator.CreateDrawing(command!);
                 drawings.Add(drawing);
                 drawer.Draw(canvas.Value, drawings);
 

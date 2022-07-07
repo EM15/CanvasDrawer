@@ -32,7 +32,7 @@ namespace CanvasDrawer
                 }
 
                 canvas = drawingCreator.CreateCanvas(command!);
-                drawer.Draw(canvas.Value);
+                drawer.DrawCanvas(canvas.Value);
             }
         }
 

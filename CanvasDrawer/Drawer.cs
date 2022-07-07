@@ -4,15 +4,15 @@ namespace CanvasDrawer
 {
     public class Drawer : IDrawer
     {
-        private const string canvasTopBottomDelimiter = "-";
-        private const string canvasLeftRightDelimiter = "|";
-        private const string emptySpace = " ";
-        private const string figureBorder = "x";
-        private string[,]? output;
+        private const char canvasTopBottomDelimiter = '-';
+        private const char canvasLeftRightDelimiter = '|';
+        private const char emptySpace = ' ';
+        private const char figureBorder = 'x';
+        private char[,]? output;
 
         public void DrawCanvas(Rectangle canvas)
         {
-            output = new string[canvas.Height + 2, canvas.Width + 2];
+            output = new char[canvas.Height + 2, canvas.Width + 2];
             var yLength = output.GetLength(0);
             var xLength = output.GetLength(1);
             for (int y = 0; y < yLength; y++)
@@ -48,31 +48,32 @@ namespace CanvasDrawer
 
         public void ApplyBucketFill(Point point, char color)
         {
-            var valueOnPoint = output[point.Y, point.X];
-
-            //TryApplyColorLeft()
-            //output[point.Y, point.X] = 
-            
-        }
-
-        private void TryApplyColorLeft()
-        {
+            var initialValue = output[point.Y, point.X];
+            TryApplyColorInAllDirections(point, color, initialValue);
+            WriteOutput();
 
         }
 
-        private void TryApplyColorRight()
+        private void TryApplyColorInAllDirections(Point point, char color, char initialValue)
         {
-
+            var pointToLeft = new Point(point.X - 1, point.Y);
+            TryApplyColor(pointToLeft, color, initialValue);
+            var pointToRight = new Point(point.X + 1, point.Y);
+            TryApplyColor(pointToRight, color, initialValue);
+            var pointToTop = new Point(point.X, point.Y - 1);
+            TryApplyColor(pointToTop, color, initialValue);
+            var pointToBottom = new Point(point.X, point.Y + 1);
+            TryApplyColor(pointToBottom, color, initialValue);
         }
 
-        private void TryApplyColorTop()
+        private void TryApplyColor(Point point, char color, char initialValue)
         {
-
-        }
-
-        private void TryApplyColorBottom()
-        {
-
+            var currentValue = output[point.Y, point.X];
+            if (currentValue == initialValue)
+            {
+                output[point.Y, point.X] = color;
+                TryApplyColorInAllDirections(point, color, currentValue);
+            }
         }
 
         private void AddFigureToOutput(Rectangle figure)

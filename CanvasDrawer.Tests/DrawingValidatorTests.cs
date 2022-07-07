@@ -13,18 +13,18 @@ namespace CanvasDrawer.Tests
         public void DrawFigureOutsideCanvasShouldBeInvalid()
         {
             var canvas = new Rectangle(0, 0, 10, 10);
-            var line = new Rectangle(10, 10, 1, 1);
-            var canBeDraw = drawingValidator.CanFigureBeDraw(canvas, new List<Rectangle>(), line);
-            Assert.False(canBeDraw);
+            var figure = new Rectangle(10, 10, 1, 1);
+            var canBeDrawn = drawingValidator.CanFigureBeDrawnInsideCanvas(canvas, figure);
+            Assert.False(canBeDrawn);
         }
 
         [Fact]
         public void DrawFigureThatGoesOutOfBoundsShouldBeInvalid()
         {
             var canvas = new Rectangle(0, 0, 10, 10);
-            var line = new Rectangle(0, 0, 11, 11);
-            var canBeDraw = drawingValidator.CanFigureBeDraw(canvas, new List<Rectangle>(), line);
-            Assert.False(canBeDraw);
+            var figure = new Rectangle(0, 0, 11, 11);
+            var canBeDrawn = drawingValidator.CanFigureBeDrawnInsideCanvas(canvas, figure);
+            Assert.False(canBeDrawn);
         }
 
         [Fact]
@@ -32,8 +32,8 @@ namespace CanvasDrawer.Tests
         {
             var canvas = new Rectangle(0, 0, 10, 10);
             var line = new Rectangle(0, 0, 5, 5);
-            var canBeDraw = drawingValidator.CanFigureBeDraw(canvas, new List<Rectangle>(), line);
-            Assert.True(canBeDraw);
+            var canBeDrawn = drawingValidator.CanFigureBeDrawnInsideCanvas(canvas, line);
+            Assert.True(canBeDrawn);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace CanvasDrawer.Creators
             return new Rectangle(0, 0, width, height);
         }
 
-        public Rectangle CreateDrawing(string command)
+        public Rectangle CreateFigure(string command)
         {
             var regex = new Regex(@"\d+");
             var matches = regex.Matches(command);

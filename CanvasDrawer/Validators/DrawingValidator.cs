@@ -4,15 +4,10 @@ namespace CanvasDrawer.Validators
 {
     public class DrawingValidator : IDrawingValidator
     {
-        public bool CanFigureBeDraw(Rectangle canvas, IEnumerable<Rectangle> figuresAlreadyDraw, Rectangle figureToBeDraw)
+        public bool CanFigureBeDrawnInsideCanvas(Rectangle canvas, Rectangle figureToBeDrawn)
         {
-            var figureIsOutsideCanvasOrGoesOutOfBounds = !canvas.Contains(figureToBeDraw);
-            if (figureIsOutsideCanvasOrGoesOutOfBounds)
-            {
-                return false;
-            }
-
-            return true;
+            var figureIsInsideCanvas = canvas.Contains(figureToBeDrawn);
+            return figureIsInsideCanvas;
         }
     }
 }

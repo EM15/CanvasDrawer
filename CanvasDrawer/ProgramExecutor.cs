@@ -8,14 +8,16 @@ namespace CanvasDrawer
     {
         private readonly ICommandValidator commandValidator;
         private readonly IFigureCreator figureCreator;
+        private readonly IDrawingValidator drawingValidator;
         private readonly IDrawer drawer;
         private Rectangle? canvas;
         private IList<Rectangle> drawings = new List<Rectangle>();
 
-        public ProgramExecutor(ICommandValidator commandValidator, IFigureCreator figureCreator, IDrawer drawer)
+        public ProgramExecutor(ICommandValidator commandValidator, IFigureCreator figureCreator, IDrawingValidator drawingValidator, IDrawer drawer)
         {
             this.commandValidator = commandValidator;
             this.figureCreator = figureCreator;
+            this.drawingValidator = drawingValidator;
             this.drawer = drawer;
         }
 
@@ -39,25 +41,38 @@ namespace CanvasDrawer
 
         public void ReadCommands()
         {
-            ShowDrawOnCanvasMessage();
-            var command = Console.ReadLine();
+            var command = GetDrawnOnCanvasCommand();
             while (command != "Q")
             {
                 var isValid = commandValidator.IsDrawingCommandValid(command);
                 if (!isValid)
                 {
                     ShowInvalidCommandMessage();
-                    command = Console.ReadLine();
+                    command = GetDrawnOnCanvasCommand();
                     continue;
                 }
 
-                var drawing = figureCreator.CreateDrawing(command!);
-                drawings.Add(drawing);
+                var figure = figureCreator.CreateFigure(command!);
+
+                var canFigureBeDrawn = drawingValidator.CanFigureBeDrawnInsideCanvas(canvas.Value, figure);
+                if (!canFigureBeDrawn)
+                {
+                    Console.WriteLine("Figure is outside canvas");
+                    command = GetDrawnOnCanvasCommand();
+                    continue;
+                }
+                
+                drawings.Add(figure);
                 drawer.Draw(canvas.Value, drawings);
 
-                ShowDrawOnCanvasMessage();
-                command = Console.ReadLine();
+                command = GetDrawnOnCanvasCommand();
             }
+        }
+
+        private string? GetDrawnOnCanvasCommand()
+        {
+            Console.WriteLine("Draw on the canvas");
+            return Console.ReadLine();
         }
 
         private void ShowDrawOnCanvasMessage() => Console.WriteLine("Draw on the canvas");

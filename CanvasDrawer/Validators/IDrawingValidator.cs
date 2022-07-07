@@ -4,6 +4,6 @@ namespace CanvasDrawer.Validators
 {
     public interface IDrawingValidator
     {
-        bool CanFigureBeDraw(Rectangle canvas, IEnumerable<Rectangle> figuresAlreadyDraw, Rectangle figureToBeDraw);
+        bool CanFigureBeDrawnInsideCanvas(Rectangle canvas, Rectangle figureToBeDrawn);
     }
 }

@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Text;
 
-namespace CanvasDrawer
+namespace CanvasDrawer.Drawing
 {
     public class Drawer : IDrawer
     {
@@ -34,7 +34,7 @@ namespace CanvasDrawer
                         continue;
                     }
 
-                    var isCanvasBorderLeftOrRight = (y != 0 && y != yLength - 1) && (x == 0 || x == xLength - 1);
+                    var isCanvasBorderLeftOrRight = y != 0 && y != yLength - 1 && (x == 0 || x == xLength - 1);
                     if (isCanvasBorderLeftOrRight)
                     {
                         output[y, x] = canvasLeftRightDelimiter;

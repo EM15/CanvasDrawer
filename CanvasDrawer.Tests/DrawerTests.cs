@@ -1,4 +1,5 @@
 ﻿using CanvasDrawer.Console;
+using CanvasDrawer.Drawing;
 using FakeItEasy;
 using System;
 using System.Drawing;

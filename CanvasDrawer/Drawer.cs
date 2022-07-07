@@ -93,11 +93,11 @@ namespace CanvasDrawer
 
         private void WriteOutput()
         {
-            for (int x = 0; x < output.GetLength(0); x++)
+            for (int y = 0; y < output.GetLength(0); y++)
             {
-                for (int y = 0; y < output.GetLength(1); y++)
+                for (int x = 0; x < output.GetLength(1); x++)
                 {
-                    Console.Write(output[x, y]);
+                    Console.Write(output[y, x]);
                 }
                 Console.WriteLine();
             }

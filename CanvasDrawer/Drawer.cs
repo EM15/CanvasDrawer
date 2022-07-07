@@ -36,43 +36,30 @@ namespace CanvasDrawer
             }
         }
 
+        private void AddFigureToOutput(Rectangle figure)
+        {
+            for (int y = figure.Top; y <= figure.Bottom; y++)
+            {
+                for (int x = figure.Left; x <= figure.Right; x++)
+                {
+                    output[y, x] = "x";
+                }
+            }
+        }
+
         public void Draw(Rectangle figure)
         {
             if (output is null)
             {
                 CreateCanvas(figure);
-                WriteOutput();
             }
-            //else
-            //var startPosition = Console.GetCursorPosition();
+            else
+            {
+                AddFigureToOutput(figure);
+            }
 
-            //DrawCanvas(canvas);
-
-            //var endPosition = Console.GetCursorPosition();
-
-            //foreach (var figure in figures)
-            //{
-            //    DrawFigure(startPosition, figure);
-            //}
-
-            //Console.SetCursorPosition(endPosition.Left, endPosition.Top);
+            WriteOutput();
         }
-
-        //private void DrawFigure((int Left, int Top) canvasStartPosition, Rectangle figure)
-        //{
-        //    for (int xPos = figure.Left; xPos <= figure.Right; xPos++)
-        //    {
-        //        for (int yPos = figure.Top; yPos <= figure.Bottom; yPos++)
-        //        {
-        //            var isRectangleBorderPosition = xPos == figure.Left || xPos == figure.Right || yPos == figure.Bottom || yPos == figure.Top;
-        //            if (isRectangleBorderPosition)
-        //            {
-        //                Console.SetCursorPosition(canvasStartPosition.Left + xPos, canvasStartPosition.Top + yPos);
-        //                Console.Write("x");
-        //            }
-        //        }
-        //    }
-        //}
 
         private void WriteOutput()
         {

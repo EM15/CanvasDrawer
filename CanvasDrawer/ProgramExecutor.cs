@@ -38,7 +38,7 @@ namespace CanvasDrawer
 
         public void ReadCommands()
         {
-            Console.WriteLine("Draw on the canvas");
+            ShowDrawOnCanvasMessage();
             var command = Console.ReadLine();
             while (command != "Q")
             {
@@ -51,12 +51,15 @@ namespace CanvasDrawer
                 }
 
                 var drawing = drawingCreator.CreateDrawing(command!);
-                drawer.Draw(drawing);
+                drawer.Draw(canvas.Value, drawing);
 
+                ShowDrawOnCanvasMessage();
                 command = Console.ReadLine();
             }
         }
 
-        private void ShowInvalidCommandMessage() => Console.WriteLine("InvalidCommand");
+        private void ShowDrawOnCanvasMessage() => Console.WriteLine("Draw on the canvas");
+
+        private void ShowInvalidCommandMessage() => Console.WriteLine("Invalid command");
     }
 }

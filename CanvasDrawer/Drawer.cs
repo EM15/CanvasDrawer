@@ -37,34 +37,24 @@ namespace CanvasDrawer
             Console.WriteLine(output.ToString());
         }
 
-        private void DrawCurrentCanvas()
-        {
-            
-        }
-
-        public void Draw(Line line)
+        public void Draw(Rectangle rectangle)
         {
             var startPosition = Console.GetCursorPosition();
 
-            DrawCurrentCanvas();
+            Draw(currentCanvas);
 
-            for (int i = 0; i < line.Length; i++)
-            {
-                if (line.IsHorizontal)
-                {
-                    Console.SetCursorPosition(startPosition.Left + 1 + i, startPosition.Top + 1);
-                }
-                else
-                {
-                    Console.SetCursorPosition(startPosition.Left + 1, startPosition.Top + i + 1);
-                }
-                Console.Write("x");
-            }
-        }
-
-        public void Draw(Rectangle rectangle)
-        {
-            throw new NotImplementedException();
+            //for (int i = 0; i < line.Length; i++)
+            //{
+            //    if (line.IsHorizontal)
+            //    {
+            //        Console.SetCursorPosition(startPosition.Left + 1 + i, startPosition.Top + 1);
+            //    }
+            //    else
+            //    {
+            //        Console.SetCursorPosition(startPosition.Left + 1, startPosition.Top + i + 1);
+            //    }
+            //    Console.Write("x");
+            //}
         }
     }
 }

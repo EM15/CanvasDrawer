@@ -50,33 +50,10 @@ namespace CanvasDrawer
                     continue;
                 }
 
-                CreateDrawing(command!);
-                command = Console.ReadLine();
-            }
-        }
+                var drawing = drawingCreator.CreateDrawing(command!);
+                drawer.Draw(drawing);
 
-        private void CreateDrawing(string command)
-        {
-            try
-            {
-                var firstCommandLetter = command.First();
-                switch (firstCommandLetter)
-                {
-                    case 'L':
-                        var line = drawingCreator.CreateLine(command);
-                        drawer.Draw(line);
-                        break;
-                    case 'R':
-                        var rectangle = drawingCreator.CreateRectangle(command);
-                        drawer.Draw(rectangle);
-                        break;
-                    case 'B':
-                        throw new NotImplementedException("Bucket fill was not implemented yet");
-                }
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex.Message);
+                command = Console.ReadLine();
             }
         }
 

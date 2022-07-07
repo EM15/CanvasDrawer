@@ -1,11 +1,10 @@
-﻿using CanvasDrawer.Drawings;
-using System.Drawing;
+﻿using System.Drawing;
 
 namespace CanvasDrawer
 {
     public interface IDrawer
     {
-        void Draw(Canvas canvas);
+        void DrawCanvas(Rectangle canvas);
         void Draw(Rectangle rectangle);
     }
 }

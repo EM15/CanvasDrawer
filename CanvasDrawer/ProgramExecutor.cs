@@ -1,6 +1,6 @@
 ﻿using CanvasDrawer.Creators;
-using CanvasDrawer.Drawings;
 using CanvasDrawer.Validators;
+using System.Drawing;
 
 namespace CanvasDrawer
 {
@@ -9,7 +9,7 @@ namespace CanvasDrawer
         private readonly ICommandValidator commandValidator;
         private readonly IDrawingCreator drawingCreator;
         private readonly IDrawer drawer;
-        private Canvas? canvas;
+        private Rectangle? canvas;
 
         public ProgramExecutor(ICommandValidator commandValidator, IDrawingCreator drawingCreator, IDrawer drawer)
         {
@@ -32,7 +32,7 @@ namespace CanvasDrawer
                 }
 
                 canvas = drawingCreator.CreateCanvas(command!);
-                drawer.Draw(canvas);
+                drawer.Draw(canvas.Value);
             }
         }
 

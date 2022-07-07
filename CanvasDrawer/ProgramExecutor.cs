@@ -52,20 +52,34 @@ namespace CanvasDrawer
                     continue;
                 }
 
-                var figure = figureCreator.CreateFigure(command!);
-
-                var canFigureBeDrawn = drawingValidator.CanFigureBeDrawnInsideCanvas(canvas.Value, figure);
-                if (!canFigureBeDrawn)
+                try
                 {
-                    Console.WriteLine("Figure is outside canvas");
+                    var figure = figureCreator.CreateFigure(command!);
+                    TryToDraw(figure);
                     command = GetDrawnOnCanvasCommand();
-                    continue;
                 }
-                
+                catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                finally
+                {
+                    command = GetDrawnOnCanvasCommand();
+                }
+            }
+        }
+
+        public void TryToDraw(Rectangle figure)
+        {
+            var canFigureBeDrawn = drawingValidator.CanFigureBeDrawnInsideCanvas(canvas.Value, figure);
+            if (canFigureBeDrawn)
+            {
                 drawings.Add(figure);
                 drawer.Draw(canvas.Value, drawings);
-
-                command = GetDrawnOnCanvasCommand();
+            } 
+            else
+            {
+                Console.WriteLine("Figure is outside canvas");
             }
         }
 
@@ -74,8 +88,6 @@ namespace CanvasDrawer
             Console.WriteLine("Draw on the canvas");
             return Console.ReadLine();
         }
-
-        private void ShowDrawOnCanvasMessage() => Console.WriteLine("Draw on the canvas");
 
         private void ShowInvalidCommandMessage() => Console.WriteLine("Invalid command");
     }

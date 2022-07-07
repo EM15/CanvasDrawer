@@ -38,6 +38,7 @@ namespace CanvasDrawer
                 var command = consoleReader.ReadLine();
                 if (command == exitCommand)
                 {
+                    environment.ExitProgram();
                     break;
                 }
 
@@ -51,8 +52,6 @@ namespace CanvasDrawer
                 canvas = figureCreator.CreateCanvas(command!);
                 drawer.DrawCanvas(canvas.Value);
             }
-
-            environment.ExitProgram();
         }
 
         public void ReadDrawingCommands()

@@ -92,15 +92,19 @@ namespace CanvasDrawer.Tests
             A.CallTo(() => fakeEnvironment.ExitProgram())
                 .MustHaveHappenedOnceExactly();
         }
-
-        [Fact]
-        public void ReadDrawingCommandShouldShowErrorMessageIfCommandIsInvalid()
+        private void CreateCanvas()
         {
             A.CallTo(() => fakeCommandValidator.IsCanvasCommandValid(A<string>.Ignored))
                 .ReturnsNextFromSequence(true);
             A.CallTo(() => fakeFigureCreator.CreateCanvas(A<string>._)).Returns(new Rectangle(1, 1, 10, 10));
             executor.ReadCanvasCommand();
             Fake.ClearRecordedCalls(fakeConsoleWriter);
+        }
+
+        [Fact]
+        public void ReadDrawingCommandShouldShowErrorMessageIfCommandIsInvalid()
+        {
+            CreateCanvas();
 
             A.CallTo(() => fakeCommandValidator.IsDrawingCommandValid(A<string>.Ignored))
                 .ReturnsNextFromSequence(false, true);
@@ -111,6 +115,42 @@ namespace CanvasDrawer.Tests
             executor.ReadDrawingCommands();
 
             A.CallTo(() => fakeConsoleWriter.WriteLine(InvalidCommandMessage))
+                .MustHaveHappenedOnceExactly();
+        }
+
+        [Fact]
+        public void ReadDrawingCommandShouldCreateBuckedFillWhenCommandIsValid()
+        {
+            CreateCanvas();
+
+            A.CallTo(() => fakeCommandValidator.IsDrawingCommandValid(A<string>.Ignored))
+                .Returns(true);
+            A.CallTo(() => fakeDrawingValidator.IsBucketFillPointInsideCanvas(A<Rectangle>._, A<Point>._)).Returns(true);
+
+            A.CallTo(() => fakeConsoleReader.ReadLine()).ReturnsNextFromSequence("B 1 1 c", "Q");
+
+            executor.ReadDrawingCommands();
+
+            A.CallTo(() => fakeFigureCreator.CreateBucketFill(A<string>._)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => fakeDrawer.ApplyBucketFill(A<Point>._, A<char>._))
+                .MustHaveHappenedOnceExactly();
+        }
+
+        [Fact]
+        public void ReadDrawingCommandShouldCreateFigureFillWhenCommandIsValid()
+        {
+            CreateCanvas();
+
+            A.CallTo(() => fakeCommandValidator.IsDrawingCommandValid(A<string>.Ignored))
+                .Returns(true);
+            A.CallTo(() => fakeDrawingValidator.CanFigureBeDrawnInsideCanvas(A<Rectangle>._, A<Rectangle>._)).Returns(true);
+
+            A.CallTo(() => fakeConsoleReader.ReadLine()).ReturnsNextFromSequence("R 2 3 4 5", "Q");
+
+            executor.ReadDrawingCommands();
+
+            A.CallTo(() => fakeFigureCreator.CreateFigure(A<string>._)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => fakeDrawer.Draw(A<Rectangle>._))
                 .MustHaveHappenedOnceExactly();
         }
     }

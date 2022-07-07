@@ -6,7 +6,13 @@ namespace CanvasDrawer.Validators
     {
         public bool CanFigureBeDraw(Rectangle canvas, IEnumerable<Rectangle> figuresAlreadyDraw, Rectangle figureToBeDraw)
         {
-            throw new NotImplementedException();
+            var figureIsOutsideCanvasOrGoesOutOfBounds = !canvas.Contains(figureToBeDraw);
+            if (figureIsOutsideCanvasOrGoesOutOfBounds)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

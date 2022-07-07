@@ -4,10 +4,6 @@
 
 This project solves a Code Challenge. The instructions can be find here: [Tech Coding Challenge](./CanvasDrawer/docs/Tech%20Coding%20Challenge.txt)
 
-## Comments
-
-Following the example from the instructions, upper left corner (x1, y1) is (1, 1) and not (0, 0);
-
 ## Installation
 
 In order to run and test the project you'll need to install [.NET 6](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
@@ -21,6 +17,11 @@ You need to execute the following command in the root of the project:
 
 To run the tests you should execute:
 `dotnet test`
+
+## Comments
+
+* Following the example from the instructions, upper left corner from the canvas is (1, 1) and not (0, 0);
+* The solution was done in 12 hours in total divided in 2 days. There are lot of things to improve for sure.
 
 ## Author
 

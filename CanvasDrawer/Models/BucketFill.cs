@@ -10,6 +10,7 @@ namespace CanvasDrawer.Models
         public Point DrawingValue { get; private set; }
         public char Color { get; private set; }
 
+        public BucketFill(int x, int y, char color) : this($"B {x} {y} {color}") { }
         public BucketFill(string command) : base(command)
         {
             var filledAreaRegex = new Regex(@"^B \d+ \d+ [a-zA-Z]$");

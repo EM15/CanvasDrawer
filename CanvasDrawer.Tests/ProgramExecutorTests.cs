@@ -61,7 +61,7 @@ namespace CanvasDrawer.Tests
 
             programExecutor.Execute();
             A.CallTo(() => fakeDrawer.Draw(A<Command>.Ignored)).MustNotHaveHappened();
-            A.CallTo(() => fakeConsoleWriter.WriteLine(exception.Message)).MustHaveHappened();
+            A.CallTo(() => fakeConsoleWriter.WriteLine(exception.Message)).MustHaveHappenedOnceExactly();
         }
 
         [Fact]
@@ -74,7 +74,7 @@ namespace CanvasDrawer.Tests
             A.CallTo(() => fakeDrawer.Draw(A<Command>.Ignored)).Throws(exception);
 
             programExecutor.Execute();
-            A.CallTo(() => fakeConsoleWriter.WriteLine(exception.Message)).MustHaveHappened();
+            A.CallTo(() => fakeConsoleWriter.WriteLine(exception.Message)).MustHaveHappenedOnceExactly();
         }
     }
 }

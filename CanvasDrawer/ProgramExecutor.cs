@@ -40,7 +40,7 @@ namespace CanvasDrawer
             }
         }
 
-        private string? GetCommandInputText()
+        private string GetCommandInputText()
         {
             consoleWriter.WriteLine("Please insert command");
             return consoleReader.ReadLine();

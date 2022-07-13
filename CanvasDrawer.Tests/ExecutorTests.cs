@@ -17,7 +17,7 @@ namespace CanvasDrawer.Tests
         private readonly IConsoleReader fakeConsoleReader;
         private readonly IConsoleWriter fakeConsoleWriter;
         private readonly IEnvironment fakeEnvironment;
-        private readonly Executor executor;
+        private readonly ProgramExecutor executor;
         private const string InvalidCommandMessage = "Invalid command";
         private const string exitCommand = "Q";
 

@@ -21,7 +21,6 @@ To run the tests you should execute:
 ## Comments
 
 * Following the example from the instructions, upper left corner from the canvas is (1, 1) and not (0, 0);
-* The solution was done in 12 hours in total divided in 2 days. There are lot of things to improve for sure.
 
 ## Author
 

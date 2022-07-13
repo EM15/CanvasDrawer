@@ -12,8 +12,7 @@ var serviceProvider = new ServiceCollection()
     .AddSingleton<IDrawer, Drawer>()
     .AddSingleton<IConsoleWriter, ConsoleWriter>()
     .AddSingleton<IConsoleReader, ConsoleReader>()
-    .AddSingleton<IEnvironment, CanvasDrawer.Console.Environment>()
-    .AddSingleton<Executor>()
+    .AddSingleton<ProgramExecutor>()
     .BuildServiceProvider();
 
 
@@ -34,6 +33,5 @@ Q               Should quit the program.
 
 ");
 
-var executor = serviceProvider.GetService<Executor>()!;
-executor.ReadCanvasCommand();
-executor.ReadDrawingCommands();
+var programExecutor = serviceProvider.GetService<ProgramExecutor>()!;
+programExecutor.Execute();

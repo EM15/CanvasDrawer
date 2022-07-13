@@ -8,10 +8,11 @@ namespace CanvasDrawer.Creators
         {
         }
 
+        // TODO: Create and invalidCommandException¿?
         public Command CreateCommand(string commandInputText)
         {
             Command command;
-            var commandDirective = commandInputText.First();
+            var commandDirective = commandInputText.FirstOrDefault();
             switch (commandDirective)
             {
                 case 'L':

@@ -24,12 +24,14 @@ namespace CanvasDrawer.Tests
         [Theory]
         [InlineData(null)]
         [InlineData("")]
-        [InlineData("C -20 30")]
-        [InlineData("C 20 -30")]
-        [InlineData("C 20 30 1")]
-        [InlineData("1 C 20 30")]
+        [InlineData("C")]
+        [InlineData("C 30")]
         [InlineData("C 0 30")]
         [InlineData("C 30 0")]
+        [InlineData("C -20 30")]
+        [InlineData("C 20 -30")]
+        [InlineData("C 20 30a")]
+        [InlineData("aC 20 30")]
         public void CreateWithInvalidCommandsShouldThrowAnArgumentException(string command)
         {
             Assert.Throws<ArgumentException>(() => new Canvas(command));

@@ -60,7 +60,11 @@ namespace CanvasDrawer.Tests
         [Theory]
         [InlineData(null)]
         [InlineData("")]
-        [InlineData("L 20 20 30 30")]
+        [InlineData("L")]
+        [InlineData("L 10")]
+        [InlineData("L 10 20")]
+        [InlineData("L 10 20 10")]
+        [InlineData("L 20 20 30 30")] // Diagonal line
         [InlineData("L -20 30 20 40")]
         [InlineData("L 20 -30 20 40")]
         [InlineData("L 20 30 -20 40")]

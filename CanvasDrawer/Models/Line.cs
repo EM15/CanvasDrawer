@@ -4,9 +4,6 @@ namespace CanvasDrawer.Models
 {
     public class Line : Command, IDrawingCommand
     {
-        // TODO: Implement
-        public static char CommandDirective = 'L';
-
         public int X1 { get; private set; }
         public int X2 { get; private set; }
         public int Y1 { get; private set; }

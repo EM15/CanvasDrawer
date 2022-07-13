@@ -2,6 +2,6 @@
 {
     public class ConsoleReader : IConsoleReader
     {
-        public string? ReadLine() => System.Console.ReadLine();
+        public string ReadLine() => System.Console.ReadLine() ?? string.Empty;
     }
 }

@@ -53,7 +53,7 @@ namespace CanvasDrawer.Tests
         [Fact]
         public void CreateCommandThrowingExceptionShouldShowTheExceptionMessage()
         {
-            var command = "Some valid command";
+            var command = "Some invalid command";
             var exception = new Exception("Error");
             A.CallTo(() => fakeConsoleReader.ReadLine())
                 .ReturnsNextFromSequence(command, quitCommand);
@@ -67,7 +67,7 @@ namespace CanvasDrawer.Tests
         [Fact]
         public void DrawThrowingExceptionShouldShowTheExceptionMessage()
         {
-            var command = "Some valid command";
+            var command = "Some invalid command";
             var exception = new Exception("Error");
             A.CallTo(() => fakeConsoleReader.ReadLine())
                 .ReturnsNextFromSequence(command, quitCommand);

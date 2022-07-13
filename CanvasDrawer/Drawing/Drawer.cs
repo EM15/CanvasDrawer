@@ -144,7 +144,7 @@ namespace CanvasDrawer.Drawing
                 throw new InvalidOperationException("Canvas was not initialized");
             }
 
-            if (!drawingCommand.CanBeAppliedToCanvas(canvas))
+            if (!drawingCommand.CanBeDrawInsideCanvas(canvas))
             {
                 throw new InvalidOperationException("Command can't be applied to current canvas");
             }

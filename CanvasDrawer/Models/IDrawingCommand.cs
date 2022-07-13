@@ -5,6 +5,6 @@
     /// </summary>
     public interface IDrawingCommand
     {
-        bool CanBeAppliedToCanvas(Canvas canvas);
+        bool CanBeDrawInsideCanvas(Canvas canvas);
     }
 }

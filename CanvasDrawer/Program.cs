@@ -2,11 +2,9 @@
 using CanvasDrawer.Console;
 using CanvasDrawer.Creators;
 using CanvasDrawer.Drawing;
-using CanvasDrawer.Validators;
 using Microsoft.Extensions.DependencyInjection;
 
 var serviceProvider = new ServiceCollection()
-    .AddSingleton<ICommandValidator, CommandValidator>()
     .AddSingleton<ICommandCreator, CommandCreator>()
     .AddSingleton<IDrawer, Drawer>()
     .AddSingleton<IConsoleWriter, ConsoleWriter>()

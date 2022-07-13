@@ -12,8 +12,14 @@ namespace CanvasDrawer.Models
 
         public Rectangle(string command) : base(command)
         {
-            var regex = new Regex(@"\d+");
-            var matches = regex.Matches(command);
+            var validationRegex = new Regex(@"^R \d+ \d+ \d+ \d+$");
+            if (!validationRegex.IsMatch(command))
+            {
+                ThrowInvalidCommandException();
+            }
+
+            var extractValuesRegex = new Regex(@"\d+");
+            var matches = extractValuesRegex.Matches(command);
             X1 = Convert.ToInt32(matches[0].Value);
             Y1 = Convert.ToInt32(matches[1].Value);
             X2 = Convert.ToInt32(matches[2].Value);
@@ -27,6 +33,6 @@ namespace CanvasDrawer.Models
             DrawingValue = new System.Drawing.Rectangle(X1, Y1, X2 - X1, Y2 - Y1);
         }
 
-        public bool CanBeAppliedToCanvas(Canvas canvas) => canvas.DrawingValue.Contains(DrawingValue);
+        public bool CanBeDrawInsideCanvas(Canvas canvas) => canvas.DrawingValue.Contains(DrawingValue);
     }
 }

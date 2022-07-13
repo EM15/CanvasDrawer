@@ -4,6 +4,6 @@ namespace CanvasDrawer.Creators
 {
     public interface ICommandCreator
     {
-        Command CreateCommand(string? commandInputText);
+        Command CreateCommand(string commandInputText);
     }
 }

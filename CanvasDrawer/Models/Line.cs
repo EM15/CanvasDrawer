@@ -4,6 +4,9 @@ namespace CanvasDrawer.Models
 {
     public class Line : Command, IDrawingCommand
     {
+        // TODO: Implement
+        public static char CommandDirective = 'L';
+
         public int X1 { get; private set; }
         public int X2 { get; private set; }
         public int Y1 { get; private set; }
@@ -12,8 +15,14 @@ namespace CanvasDrawer.Models
 
         public Line(string command) : base(command)
         {
-            var regex = new Regex(@"\d+");
-            var matches = regex.Matches(command);
+            var validationRegex = new Regex(@"^L \d+ \d+ \d+ \d+$");
+            if (!validationRegex.IsMatch(command))
+            {
+                ThrowInvalidCommandException();
+            }
+
+            var extractValuesRegex = new Regex(@"\d+");
+            var matches = extractValuesRegex.Matches(command);
             X1 = Convert.ToInt32(matches[0].Value);
             Y1 = Convert.ToInt32(matches[1].Value);
             X2 = Convert.ToInt32(matches[2].Value);
@@ -24,25 +33,15 @@ namespace CanvasDrawer.Models
                 throw new ArgumentException("Only vertical and horizontal lines are allowed");
             }
 
-            // TODO: Check if this is really needed
-            // We switch the values in case the user inserts the line drawed from right to left or from top to bottom.
-            if (X1 > X2)
-            {
-                var x1OriginalValue = X1;
-                X1 = X2;
-                X2 = x1OriginalValue;
-            }
+            // (x, y) must be from left to right or top to bottom
+            var x = X1 < X2 ? X1 : X2;
+            var y = Y1 < Y2 ? Y1 : Y2;
+            var width = Math.Abs(X2 - X1);
+            var height = Math.Abs(Y2 - Y1);
 
-            if (Y1 > Y2)
-            {
-                var y1OriginalValue = Y1;
-                Y1 = Y2;
-                Y2 = y1OriginalValue;
-            }
-
-            DrawingValue = new System.Drawing.Rectangle(X1, Y1, X2 - X1, Y2 - Y1);
+            DrawingValue = new System.Drawing.Rectangle(x, y, width, height);
         }
 
-        public bool CanBeAppliedToCanvas(Canvas canvas) => canvas.DrawingValue.Contains(DrawingValue);
+        public bool CanBeDrawInsideCanvas(Canvas canvas) => canvas.DrawingValue.Contains(DrawingValue);
     }
 }

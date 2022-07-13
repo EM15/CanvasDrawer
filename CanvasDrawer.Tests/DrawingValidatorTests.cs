@@ -1,9 +1,4 @@
-﻿using CanvasDrawer.Validators;
-using System.Collections.Generic;
-using System.Drawing;
-using Xunit;
-
-namespace CanvasDrawer.Tests
+﻿namespace CanvasDrawer.Tests
 {
     public class DrawingValidatorTests
     {

@@ -12,15 +12,20 @@ namespace CanvasDrawer.Models
 
         public BucketFill(string command) : base(command)
         {
-            var regex = new Regex(@"\d+");
-            var matches = regex.Matches(command);
+            var filledAreaRegex = new Regex(@"^B \d+ \d+ [a-zA-Z]$");
+            if (!filledAreaRegex.IsMatch(command))
+            {
+                ThrowInvalidCommandException();
+            }
 
+            var extractValuesRegex = new Regex(@"\d+");
+            var matches = extractValuesRegex.Matches(command);
             X = Convert.ToInt32(matches[0].Value);
             Y = Convert.ToInt32(matches[1].Value);
             Color = command.Last();
             DrawingValue = new Point(X, Y);
         }
 
-        public bool CanBeAppliedToCanvas(Canvas canvas) => canvas.DrawingValue.Contains(DrawingValue);
+        public bool CanBeDrawInsideCanvas(Canvas canvas) => canvas.DrawingValue.Contains(DrawingValue);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using CanvasDrawer.Console;
+using CanvasDrawer.Models;
 using System.Drawing;
 using System.Text;
 
@@ -12,15 +13,19 @@ namespace CanvasDrawer.Drawing
         private const char figureBorder = 'x';
         private readonly IConsoleWriter consoleWriter;
         private char[,]? output;
+        private Canvas? canvas;
 
         public Drawer(IConsoleWriter consoleWriter)
         {
             this.consoleWriter = consoleWriter;
         }
 
-        public void DrawCanvas(Rectangle canvas)
+        private void ApplyCanvas(Canvas canvas)
         {
-            output = new char[canvas.Height + 2, canvas.Width + 2];
+            this.canvas = canvas;
+            var rectangle = canvas.DrawingValue;
+
+            output = new char[rectangle.Height + 2, rectangle.Width + 2];
             var yLength = output.GetLength(0);
             var xLength = output.GetLength(1);
             for (int y = 0; y < yLength; y++)
@@ -44,23 +49,39 @@ namespace CanvasDrawer.Drawing
                     output[y, x] = emptySpace;
                 }
             }
+        }
+
+        public void Draw(Command command)
+        {
+            if (command is IDrawingCommand drawingCommand)
+            {
+                ValidateOrThrow(drawingCommand);
+            }
+
+            if (command is Canvas canvas)
+            {
+                ApplyCanvas(canvas);
+            }
+            else if (command is BucketFill bucketFill)
+            {
+                ApplyBucketFill(bucketFill.DrawingValue, bucketFill.Color);
+            }
+            else if (command is Models.Rectangle rectangle)
+            {
+                ApplyRectangle(rectangle.DrawingValue);
+            }
+            else if (command is Line line)
+            {
+                ApplyRectangle(line.DrawingValue);
+            }
 
             WriteOutput();
         }
 
-        public void Draw(Rectangle figure)
+        private void ApplyBucketFill(Point point, char color)
         {
-            CheckIfCanvasInitializedOrThrow();
-            AddFigureToOutput(figure);
-            WriteOutput();
-        }
-
-        public void ApplyBucketFill(Point point, char color)
-        {
-            CheckIfCanvasInitializedOrThrow();
             var initialValue = output[point.Y, point.X];
             TryApplyColorInAllDirections(point, color, initialValue);
-            WriteOutput();
         }
 
         private void TryApplyColorInAllDirections(Point point, char color, char initialValue)
@@ -85,7 +106,7 @@ namespace CanvasDrawer.Drawing
             }
         }
 
-        private void AddFigureToOutput(Rectangle figure)
+        private void ApplyRectangle(System.Drawing.Rectangle figure)
         {
             for (int x = figure.Left; x <= figure.Right; x++)
             {
@@ -116,11 +137,16 @@ namespace CanvasDrawer.Drawing
             consoleWriter.Write(sbOutput.ToString());
         }
 
-        private void CheckIfCanvasInitializedOrThrow()
+        private void ValidateOrThrow(IDrawingCommand drawingCommand)
         {
-            if (output is null)
+            if (canvas is null)
             {
                 throw new InvalidOperationException("Canvas was not initialized");
+            }
+
+            if (!drawingCommand.CanBeAppliedToCanvas(canvas))
+            {
+                throw new InvalidOperationException("Command can't be applied to current canvas");
             }
         }
     }

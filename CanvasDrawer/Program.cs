@@ -7,8 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 var serviceProvider = new ServiceCollection()
     .AddSingleton<ICommandValidator, CommandValidator>()
-    .AddSingleton<IFigureCreator, FigureCreator>()
-    .AddSingleton<IDrawingValidator, DrawingValidator>()
+    .AddSingleton<ICommandCreator, CommandCreator>()
     .AddSingleton<IDrawer, Drawer>()
     .AddSingleton<IConsoleWriter, ConsoleWriter>()
     .AddSingleton<IConsoleReader, ConsoleReader>()

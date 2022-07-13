@@ -1,11 +1,9 @@
-﻿using System.Drawing;
+﻿using CanvasDrawer.Models;
 
 namespace CanvasDrawer.Drawing
 {
     public interface IDrawer
     {
-        void DrawCanvas(Rectangle canvas);
-        void Draw(Rectangle figure);
-        void ApplyBucketFill(Point point, char color);
+        void Draw(Command command);
     }
 }

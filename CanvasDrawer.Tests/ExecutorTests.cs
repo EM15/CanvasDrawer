@@ -11,7 +11,7 @@ namespace CanvasDrawer.Tests
     public class ExecutorTests
     {
         private readonly ICommandValidator fakeCommandValidator;
-        private readonly IFigureCreator fakeFigureCreator;
+        private readonly ICommandCreator fakeFigureCreator;
         private readonly IDrawingValidator fakeDrawingValidator;
         private readonly IDrawer fakeDrawer;
         private readonly IConsoleReader fakeConsoleReader;
@@ -24,7 +24,7 @@ namespace CanvasDrawer.Tests
         public ExecutorTests()
         {
             fakeCommandValidator = A.Fake<ICommandValidator>();
-            fakeFigureCreator = A.Fake<IFigureCreator>();
+            fakeFigureCreator = A.Fake<ICommandCreator>();
             fakeDrawingValidator = A.Fake<IDrawingValidator>();
             fakeDrawer = A.Fake<IDrawer>();
             fakeConsoleReader = A.Fake<IConsoleReader>();

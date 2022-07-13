@@ -14,7 +14,7 @@ namespace CanvasDrawer.Validators
             var canvasRegex = new Regex(@"^C \d+ \d+$");
             var lineRegex = new Regex(@"^L \d+ \d+ \d+ \d+$");
             var rectangleRegex = new Regex(@"^R \d+ \d+ \d+ \d+$");
-            var filledAreaRegex = new Regex(@"^B \d+ \d+ .$");
+            var filledAreaRegex = new Regex(@"^B \d+ \d+ [a-zA-Z]$");
 
             return
                 canvasRegex.IsMatch(command)

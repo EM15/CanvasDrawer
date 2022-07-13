@@ -6,7 +6,7 @@ namespace CanvasDrawer.Tests
 {
     public class FigureCreatorTests
     {
-        private readonly FigureCreator figureCreator = new FigureCreator();
+        private readonly CommandCreator figureCreator = new CommandCreator();
 
         [Fact]
         public void CreateCanvasShouldSetCorrectValues()

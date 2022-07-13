@@ -8,113 +8,77 @@ namespace CanvasDrawer.Tests
         private readonly CommandValidator commandValidator = new CommandValidator();
 
         [Fact]
-        public void EmptyCanvasCommandShouldNotBeValid()
+        public void EmptyCommandShouldNotBeValid()
         {
             var command = string.Empty;
-            var isValid = commandValidator.IsCanvasCommandValid(command);
+            var isValid = commandValidator.IsCommandValid(command);
             Assert.False(isValid);
         }
 
         [Fact]
-        public void NullCanvasCommandShouldNotBeValid()
+        public void NullCommandShouldNotBeValid()
         {
             string? command = null;
-            var isValid = commandValidator.IsCanvasCommandValid(command);
+            var isValid = commandValidator.IsCommandValid(command);
             Assert.False(isValid);
         }
 
-        [Fact]
-        public void IncorrectCanvasCommandsShouldNotBeValid()
+        [Theory]
+        [InlineData("C 20")]
+        [InlineData("C  30")]
+        [InlineData("A")]
+        [InlineData("aC 20 30")]
+        [InlineData("C -20 30")]
+        [InlineData("A 20 30")]
+        [InlineData("L 20")]
+        [InlineData("L 20 30")]
+        [InlineData("L 20 30 40")]
+        [InlineData("L 20 30 40 -50")]
+        [InlineData("aL 20 30 40 50 c")]
+        [InlineData("R 20")]
+        [InlineData("R 20 30")]
+        [InlineData("R 20 30 10")]
+        [InlineData("R 20 30 10 -50")]
+        [InlineData("aR 20 30 10 50 c")]
+        [InlineData("B 20")]
+        [InlineData("B 20 30")]
+        [InlineData("B 20 30 -")]
+        [InlineData("aB 20 30 cc")]
+        public void IncorrectCommandsShouldNotBeValid(string command)
         {
-            var commands = new[]
-            {
-                "C 20",
-                "C  30",
-                "A",
-                "aC 20 30",
-                "C -20 30",
-                "A 20 30"
-            };
-
-            foreach (var command in commands)
-            {
-                var isValid = commandValidator.IsCanvasCommandValid(command);
-                Assert.False(isValid);
-            }
+            var isValid = commandValidator.IsCommandValid(command);
+            Assert.False(isValid);
         }
 
         [Fact]
         public void CorrectCanvasCommandShouldBeValid()
         {
             var command = "C 20 30";
-            var isValid = commandValidator.IsCanvasCommandValid(command);
+            var isValid = commandValidator.IsCommandValid(command);
             Assert.True(isValid);
         }
 
         [Fact]
-        public void EmptyDrawingCommandShouldNotBeValid()
-        {
-            var command = string.Empty;
-            var isValid = commandValidator.IsDrawingCommandValid(command);
-            Assert.False(isValid);
-        }
-
-        [Fact]
-        public void NullDrawingCommandShouldNotBeValid()
-        {
-            string? command = null;
-            var isValid = commandValidator.IsDrawingCommandValid(command);
-            Assert.False(isValid);
-        }
-
-        [Fact]
-        public void IncorrectDrawingCommandsShouldNotBeValid()
-        {
-            var commands = new[]
-            {
-                "L 20",
-                "L 20 30",
-                "L 20 30 40",
-                "L 20 30 40 -50",
-                "aL 20 30 40 50 c",
-                "R 20",
-                "R 20 30",
-                "R 20 30 10",
-                "R 20 30 10 -50",
-                "aR 20 30 10 50 c",
-                "B 20",
-                "B 20 30",
-                "aB 20 30 cc"
-            };
-
-            foreach (var command in commands)
-            {
-                var isValid = commandValidator.IsDrawingCommandValid(command);
-                Assert.False(isValid);
-            }
-        }
-
-        [Fact]
-        public void CorrectDrawingLineCommandShouldBeValid()
+        public void CorrectLineCommandShouldBeValid()
         {
             var command = "L 20 30 40 50";
-            var isValid = commandValidator.IsDrawingCommandValid(command);
+            var isValid = commandValidator.IsCommandValid(command);
             Assert.True(isValid);
         }
 
         [Fact]
-        public void CorrectDrawingRectangleCommandShouldBeValid()
+        public void CorrectRectangleCommandShouldBeValid()
         {
             var command = "R 10 20 30 40";
-            var isValid = commandValidator.IsDrawingCommandValid(command);
+            var isValid = commandValidator.IsCommandValid(command);
             Assert.True(isValid);
         }
 
         [Fact]
-        public void CorrectDrawingColourCommandShouldBeValid()
+        public void CorrectBucketFillCommandShouldBeValid()
         {
             var command = "B 20 30 c";
-            var isValid = commandValidator.IsDrawingCommandValid(command);
+            var isValid = commandValidator.IsCommandValid(command);
             Assert.True(isValid);
         }
     }

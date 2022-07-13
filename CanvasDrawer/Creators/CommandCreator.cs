@@ -11,9 +11,10 @@ namespace CanvasDrawer.Creators
 
         public Command CreateCommand(string commandInputText)
         {
+            commandInputText = commandInputText ?? string.Empty; // To avoid null check below
+
             Command command;
-            var commandDirective = commandInputText.FirstOrDefault();
-            
+            char commandDirective = commandInputText.FirstOrDefault();
             switch (commandDirective)
             {
                 case LineCommand.CommandDirective:

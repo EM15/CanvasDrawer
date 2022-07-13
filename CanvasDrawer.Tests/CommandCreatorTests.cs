@@ -1,83 +1,49 @@
-﻿using CanvasDrawer.Creators;
-using System;
+﻿using CanvasDrawer.Commands;
+using CanvasDrawer.Creators;
+using CanvasDrawer.Exceptions;
 using Xunit;
 
 namespace CanvasDrawer.Tests
 {
     public class CommandCreatorTests
     {
-        //private readonly CommandCreator figureCreator = new CommandCreator();
+        private readonly CommandCreator commandCreator = new CommandCreator();
 
-        //[Fact]
-        //public void CreateCanvasShouldSetCorrectValues()
-        //{
-        //    var command = "C 20 30";
-        //    var canvas = figureCreator.CreateCanvas(command);
-        //    Assert.True(canvas.X == 1);
-        //    Assert.True(canvas.Y == 1);
-        //    Assert.True(canvas.Width == 20);
-        //    Assert.True(canvas.Height == 30);
-        //}
+        [Fact]
+        public void CanvasCommandShouldBeCreatedCorrectly()
+        {
+            var command = commandCreator.CreateCommand("C 20 4");
+            Assert.IsType<CanvasCommand>(command);
+        }
 
-        //[Fact]
-        //public void CreateDiagonalLineShouldThrowAnException()
-        //{
-        //    var command = "L 20 30 40 50";
-        //    Assert.Throws<ArgumentException>(() => figureCreator.CreateFigure(command));
-        //}
+        [Fact]
+        public void LineCommandShouldBeCreatedCorrectly()
+        {
+            var command = commandCreator.CreateCommand("L 1 2 6 2");
+            Assert.IsType<LineCommand>(command);
+        }
 
-        //[Fact]
-        //public void CreateHorizontalLineShouldSetCorrectValues()
-        //{
-        //    var command = "L 20 30 20 40";
-        //    var line = figureCreator.CreateFigure(command);
-        //    Assert.True(line.Left == 20);
-        //    Assert.True(line.Top == 30);
-        //    Assert.True(line.Right == 20);
-        //    Assert.True(line.Bottom == 40);
-        //}
+        [Fact]
+        public void RectangleCommandShouldBeCreatedCorrectly()
+        {
+            var command = commandCreator.CreateCommand("R 14 1 18 3");
+            Assert.IsType<RectangleCommand>(command);
+        }
 
-        //[Fact]
-        //public void CreateVerticalLineShouldSetCorrectValues()
-        //{
-        //    var command = "L 20 30 40 30";
-        //    var line = figureCreator.CreateFigure(command);
-        //    Assert.True(line.Left == 20);
-        //    Assert.True(line.Top == 30);
-        //    Assert.True(line.Right == 40);
-        //    Assert.True(line.Bottom == 30);
-        //}
+        [Fact]
+        public void BucketFillCommandShouldBeCreatedCorrectly()
+        {
+            var command = commandCreator.CreateCommand("B 10 3 o");
+            Assert.IsType<BucketFillCommand>(command);
+        }
 
-        //[Fact]
-        //public void RectangleValuesShouldBeSetCorrectly()
-        //{
-        //    var command = "R 20 30 40 50";
-        //    var rectangle = figureCreator.CreateFigure(command);
-        //    Assert.True(rectangle.Left == 20);
-        //    Assert.True(rectangle.Top == 30);
-        //    Assert.True(rectangle.Right == 40);
-        //    Assert.True(rectangle.Bottom == 50);
-        //}
-
-        //[Fact]
-        //public void CreateRectangleWithRightUpperCornerFirstShuldThrowAnExpcetion()
-        //{
-        //    var command = "R 40 30 20 50";
-        //    Assert.Throws<ArgumentException>(() => figureCreator.CreateFigure(command));
-        //}
-
-        //[Fact]
-        //public void CreateRectangleWithRightLowerCornerFirstShuldThrowAnExpcetion()
-        //{
-        //    var command = "R 40 50 20 30";
-        //    Assert.Throws<ArgumentException>(() => figureCreator.CreateFigure(command));
-        //}
-
-        //[Fact]
-        //public void CreateRectangleWithLeftLowerCornerFirstShuldThrowAnExpcetion()
-        //{
-        //    var command = "R 20 50 40 30";
-        //    Assert.Throws<ArgumentException>(() => figureCreator.CreateFigure(command));
-        //}
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData("Z")]
+        public void InvalidCommandShouldThrowAnException(string command)
+        {
+            Assert.Throws<InvalidCommandException>(() => commandCreator.CreateCommand(command));
+        }
     }
 }

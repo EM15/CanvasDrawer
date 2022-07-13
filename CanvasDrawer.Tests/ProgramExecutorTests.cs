@@ -3,6 +3,7 @@ using CanvasDrawer.Creators;
 using CanvasDrawer.Drawing;
 using CanvasDrawer.Models;
 using FakeItEasy;
+using System;
 using Xunit;
 
 namespace CanvasDrawer.Tests
@@ -14,6 +15,7 @@ namespace CanvasDrawer.Tests
         private readonly ICommandCreator fakeCommandCreator;
         private readonly IConsoleReader fakeConsoleReader;
         private readonly IConsoleWriter fakeConsoleWriter;
+        private const string quitCommand = "Q";
 
         public ProgramExecutorTests()
         {
@@ -27,8 +29,7 @@ namespace CanvasDrawer.Tests
         [Fact]
         public void InsertQuitCommandShouldNotDoAnything()
         {
-            var command = "Q";
-            A.CallTo(() => fakeConsoleReader.ReadLine()).Returns(command);
+            A.CallTo(() => fakeConsoleReader.ReadLine()).Returns(quitCommand);
 
             programExecutor.Execute();
 
@@ -36,6 +37,44 @@ namespace CanvasDrawer.Tests
             A.CallTo(() => fakeDrawer.Draw(A<Command>._)).MustNotHaveHappened();
         }
 
-        // TODO: Add more tests
+        [Fact]
+        public void InsertNotQuitCommandShouldCreateCommandAndDraw()
+        {
+            var command = "Some valid command";
+            A.CallTo(() => fakeConsoleReader.ReadLine())
+                .ReturnsNextFromSequence(command, quitCommand);
+
+            programExecutor.Execute();
+
+            A.CallTo(() => fakeCommandCreator.CreateCommand(A<string>.Ignored)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => fakeDrawer.Draw(A<Command>.Ignored)).MustHaveHappenedOnceExactly();
+        }
+
+        [Fact]
+        public void CreateCommandThrowingExceptionShouldShowTheExceptionMessage()
+        {
+            var command = "Some valid command";
+            var exception = new Exception("Error");
+            A.CallTo(() => fakeConsoleReader.ReadLine())
+                .ReturnsNextFromSequence(command, quitCommand);
+            A.CallTo(() => fakeCommandCreator.CreateCommand(A<string>.Ignored)).Throws(exception);
+
+            programExecutor.Execute();
+            A.CallTo(() => fakeDrawer.Draw(A<Command>.Ignored)).MustNotHaveHappened();
+            A.CallTo(() => fakeConsoleWriter.WriteLine(exception.Message)).MustHaveHappened();
+        }
+
+        [Fact]
+        public void DrawThrowingExceptionShouldShowTheExceptionMessage()
+        {
+            var command = "Some valid command";
+            var exception = new Exception("Error");
+            A.CallTo(() => fakeConsoleReader.ReadLine())
+                .ReturnsNextFromSequence(command, quitCommand);
+            A.CallTo(() => fakeDrawer.Draw(A<Command>.Ignored)).Throws(exception);
+
+            programExecutor.Execute();
+            A.CallTo(() => fakeConsoleWriter.WriteLine(exception.Message)).MustHaveHappened();
+        }
     }
 }

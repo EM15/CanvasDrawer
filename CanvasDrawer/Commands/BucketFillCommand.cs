@@ -1,22 +1,23 @@
-﻿using System.Drawing;
+﻿using CanvasDrawer.Exceptions;
+using System.Drawing;
 using System.Text.RegularExpressions;
 
-namespace CanvasDrawer.Models
+namespace CanvasDrawer.Commands
 {
-    public class BucketFill : Command, IDrawingCommand
+    public class BucketFillCommand : Command, IDrawingCommand
     {
         public int X { get; private set; }
         public int Y { get; private set; }
         public Point DrawingValue { get; private set; }
         public char Color { get; private set; }
 
-        public BucketFill(int x, int y, char color) : this($"B {x} {y} {color}") { }
-        public BucketFill(string command) : base(command)
+        public BucketFillCommand(int x, int y, char color) : this($"B {x} {y} {color}") { }
+        public BucketFillCommand(string command) : base(command)
         {
             var filledAreaRegex = new Regex(@"^B \d+ \d+ [a-zA-Z]$");
             if (!filledAreaRegex.IsMatch(command))
             {
-                ThrowInvalidCommandException();
+                throw new InvalidCommandException();
             }
 
             var extractValuesRegex = new Regex(@"\d+");
@@ -27,6 +28,6 @@ namespace CanvasDrawer.Models
             DrawingValue = new Point(X, Y);
         }
 
-        public bool CanBeDrawInsideCanvas(Canvas canvas) => canvas.DrawingValue.Contains(DrawingValue);
+        public bool CanBeDrawInsideCanvas(CanvasCommand canvas) => canvas.DrawingValue.Contains(DrawingValue);
     }
 }

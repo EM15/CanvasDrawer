@@ -1,4 +1,5 @@
-﻿using CanvasDrawer.Models;
+﻿using CanvasDrawer.Commands;
+using CanvasDrawer.Exceptions;
 using System;
 using Xunit;
 
@@ -10,7 +11,7 @@ namespace CanvasDrawer.Tests
         public void CreateWithValidCommandShouldBeDoneCorrectly()
         {
             var command = "C 20 30";
-            var canvas = new Canvas(command);
+            var canvas = new CanvasCommand(command);
 
             Assert.Equal(command, canvas.CommandText);
             Assert.Equal(20, canvas.Width);
@@ -26,15 +27,21 @@ namespace CanvasDrawer.Tests
         [InlineData("")]
         [InlineData("C")]
         [InlineData("C 30")]
-        [InlineData("C 0 30")]
-        [InlineData("C 30 0")]
         [InlineData("C -20 30")]
         [InlineData("C 20 -30")]
         [InlineData("C 20 30a")]
         [InlineData("aC 20 30")]
-        public void CreateWithInvalidCommandsShouldThrowAnArgumentException(string command)
+        public void CreateWithInvalidCommandsShouldThrowAnInvalidCommandException(string command)
         {
-            Assert.Throws<ArgumentException>(() => new Canvas(command));
+            Assert.Throws<InvalidCommandException>(() => new CanvasCommand(command));
+        }
+
+        [Theory]
+        [InlineData("C 0 30")]
+        [InlineData("C 30 0")]
+        public void CreateWithInvalidParametersShouldThrowAnArgumentException(string command)
+        {
+            Assert.Throws<ArgumentException>(() => new CanvasCommand(command));
         }
     }
 }

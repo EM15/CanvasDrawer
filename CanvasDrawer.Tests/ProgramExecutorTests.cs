@@ -1,7 +1,7 @@
-﻿using CanvasDrawer.Console;
+﻿using CanvasDrawer.Commands;
+using CanvasDrawer.Console;
 using CanvasDrawer.Creators;
 using CanvasDrawer.Drawing;
-using CanvasDrawer.Models;
 using FakeItEasy;
 using System;
 using Xunit;

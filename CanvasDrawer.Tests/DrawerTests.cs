@@ -1,6 +1,6 @@
-﻿using CanvasDrawer.Console;
+﻿using CanvasDrawer.Commands;
+using CanvasDrawer.Console;
 using CanvasDrawer.Drawing;
-using CanvasDrawer.Models;
 using FakeItEasy;
 using System;
 using System.Text;
@@ -22,7 +22,7 @@ namespace CanvasDrawer.Tests
         [Fact]
         public void CanvasShouldBeDrawnCorrectly()
         {
-            var canvas = new Canvas(4, 4);
+            var canvas = new CanvasCommand(4, 4);
             var canvasDrawSb = new StringBuilder();
             canvasDrawSb.AppendLine("------");
             canvasDrawSb.AppendLine("|    |");
@@ -38,32 +38,32 @@ namespace CanvasDrawer.Tests
         [Fact]
         public void DrawLineShouldThrowAnExceptionIfCanvasWasNotInitialized()
         {
-            var line = new Line(10, 10, 10, 20);
+            var line = new LineCommand(10, 10, 10, 20);
             Assert.Throws<InvalidOperationException>(() => drawer.Draw(line));
         }
 
         [Fact]
         public void DrawRectangleShouldThrowAnExceptionIfCanvasWasNotInitialized()
         {
-            var rectangle = new Rectangle(10, 10, 20, 20);
+            var rectangle = new RectangleCommand(10, 10, 20, 20);
             Assert.Throws<InvalidOperationException>(() => drawer.Draw(rectangle));
         }
 
         [Fact]
         public void DrawBucketFillShouldThrowAnExceptionIfCanvasWasNotInitialized()
         {
-            var bucketFill = new Line(10, 10, 10, 20);
+            var bucketFill = new LineCommand(10, 10, 10, 20);
             Assert.Throws<InvalidOperationException>(() => drawer.Draw(bucketFill));
         }
 
         [Fact]
         public void DrawRectangleShouldBeDrawnCorretly()
         {
-            var canvas = new Canvas(4, 4);
+            var canvas = new CanvasCommand(4, 4);
             drawer.Draw(canvas);
             Fake.ClearRecordedCalls(fakeConsoleWriter);
 
-            var rectangle = new Rectangle(1, 1, 3, 3);
+            var rectangle = new RectangleCommand(1, 1, 3, 3);
             var outputSb = new StringBuilder();
             outputSb.AppendLine("------");
             outputSb.AppendLine("|xxx |");
@@ -79,11 +79,11 @@ namespace CanvasDrawer.Tests
         [Fact]
         public void DrawLineShouldBeDrawnCorretly()
         {
-            var canvas = new Canvas(4, 4);
+            var canvas = new CanvasCommand(4, 4);
             drawer.Draw(canvas);
             Fake.ClearRecordedCalls(fakeConsoleWriter);
 
-            var line = new Line(1, 1, 3, 1);
+            var line = new LineCommand(1, 1, 3, 1);
             var outputSb = new StringBuilder();
             outputSb.AppendLine("------");
             outputSb.AppendLine("|xxx |");
@@ -99,15 +99,15 @@ namespace CanvasDrawer.Tests
         [Fact]
         public void DrawBucketFillShouldBeDrawnCorrectly()
         {
-            var canvas = new Canvas(4, 4);
+            var canvas = new CanvasCommand(4, 4);
             drawer.Draw(canvas);
 
-            var rectangle = new Rectangle(1, 2, 3, 4);
+            var rectangle = new RectangleCommand(1, 2, 3, 4);
             drawer.Draw(rectangle);
 
             Fake.ClearRecordedCalls(fakeConsoleWriter);
 
-            var bucketFill = new BucketFill(1, 1, 'c');
+            var bucketFill = new BucketFillCommand(1, 1, 'c');
 
             var outputSb = new StringBuilder();
             outputSb.AppendLine("------");
@@ -124,14 +124,14 @@ namespace CanvasDrawer.Tests
         [Fact]
         public void BucketFillShouldBeAppliedToAnotherColorCorrectly()
         {
-            var canvas = new Canvas(4, 4);
+            var canvas = new CanvasCommand(4, 4);
             drawer.Draw(canvas);
 
-            var rectangle = new Rectangle(1, 2, 3, 4);
+            var rectangle = new RectangleCommand(1, 2, 3, 4);
             drawer.Draw(rectangle);
             Fake.ClearRecordedCalls(fakeConsoleWriter);
 
-            var bucketFill = new BucketFill(1, 2, 'c');
+            var bucketFill = new BucketFillCommand(1, 2, 'c');
 
             var outputSb = new StringBuilder();
             outputSb.AppendLine("------");

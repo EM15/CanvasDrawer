@@ -1,20 +1,22 @@
-﻿using System.Text.RegularExpressions;
+﻿using CanvasDrawer.Exceptions;
+using System.Drawing;
+using System.Text.RegularExpressions;
 
-namespace CanvasDrawer.Models
+namespace CanvasDrawer.Commands
 {
-    public class Canvas : Command
+    public class CanvasCommand : Command
     {
         public int Width { get; private set; }
         public int Height { get; private set; }
-        public System.Drawing.Rectangle DrawingValue { get; private set; }
+        public Rectangle DrawingValue { get; private set; }
 
-        public Canvas(int width, int height) : this($"C {width} {height}") { }
-        public Canvas(string command) : base(command)
+        public CanvasCommand(int width, int height) : this($"C {width} {height}") { }
+        public CanvasCommand(string command) : base(command)
         {
             var validationRegex = new Regex(@"^C \d+ \d+$");
             if (!validationRegex.IsMatch(command))
             {
-                ThrowInvalidCommandException();
+                throw new InvalidCommandException();
             }
 
             var extractValuesRegex = new Regex(@"\d+");
@@ -28,7 +30,7 @@ namespace CanvasDrawer.Models
                 throw new ArgumentException("Canvas width/height can't be 0");
             }
 
-            DrawingValue = new System.Drawing.Rectangle(1, 1, Width, Height);
+            DrawingValue = new Rectangle(1, 1, Width, Height);
         }
     }
 }

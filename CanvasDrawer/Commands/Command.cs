@@ -1,4 +1,6 @@
-﻿namespace CanvasDrawer.Models
+﻿using CanvasDrawer.Exceptions;
+
+namespace CanvasDrawer.Commands
 {
     public abstract class Command
     {
@@ -8,12 +10,10 @@
         {
             if (string.IsNullOrEmpty(command))
             {
-                ThrowInvalidCommandException();
+                throw new InvalidCommandException();
             }
 
             CommandText = command;
         }
-
-        protected void ThrowInvalidCommandException() => throw new ArgumentException("Invalid command");
     }
 }

@@ -1,23 +1,25 @@
-﻿using System.Text.RegularExpressions;
+﻿using CanvasDrawer.Exceptions;
+using System.Drawing;
+using System.Text.RegularExpressions;
 
-namespace CanvasDrawer.Models
+namespace CanvasDrawer.Commands
 {
-    public class Line : Command, IDrawingCommand
+    public class LineCommand : Command, IDrawingCommand
     {
         public int X1 { get; private set; }
         public int X2 { get; private set; }
         public int Y1 { get; private set; }
         public int Y2 { get; private set; }
-        public System.Drawing.Rectangle DrawingValue { get; private set; }
+        public Rectangle DrawingValue { get; private set; }
 
-        public Line(int x1, int y1, int x2, int y2) : this($"L {x1} {y1} {x2} {y2}") { }
+        public LineCommand(int x1, int y1, int x2, int y2) : this($"L {x1} {y1} {x2} {y2}") { }
 
-        public Line(string command) : base(command)
+        public LineCommand(string command) : base(command)
         {
             var validationRegex = new Regex(@"^L \d+ \d+ \d+ \d+$");
             if (!validationRegex.IsMatch(command))
             {
-                ThrowInvalidCommandException();
+                throw new InvalidCommandException();
             }
 
             var extractValuesRegex = new Regex(@"\d+");
@@ -38,9 +40,9 @@ namespace CanvasDrawer.Models
             var width = Math.Abs(X2 - X1);
             var height = Math.Abs(Y2 - Y1);
 
-            DrawingValue = new System.Drawing.Rectangle(x, y, width, height);
+            DrawingValue = new Rectangle(x, y, width, height);
         }
 
-        public bool CanBeDrawInsideCanvas(Canvas canvas) => canvas.DrawingValue.Contains(DrawingValue);
+        public bool CanBeDrawInsideCanvas(CanvasCommand canvas) => canvas.DrawingValue.Contains(DrawingValue);
     }
 }

@@ -1,4 +1,4 @@
-﻿using CanvasDrawer.Models;
+﻿using CanvasDrawer.Commands;
 
 namespace CanvasDrawer.Creators
 {
@@ -16,16 +16,16 @@ namespace CanvasDrawer.Creators
             switch (commandDirective)
             {
                 case 'L':
-                    command = new Line(commandInputText);
+                    command = new LineCommand(commandInputText);
                     break;
                 case 'R':
-                    command = new Rectangle(commandInputText);
+                    command = new RectangleCommand(commandInputText);
                     break;
                 case 'B':
-                    command = new BucketFill(commandInputText);
+                    command = new BucketFillCommand(commandInputText);
                     break;
                 default: // Is Canvas
-                    command = new Canvas(commandInputText);
+                    command = new CanvasCommand(commandInputText);
                     break;
             }
 

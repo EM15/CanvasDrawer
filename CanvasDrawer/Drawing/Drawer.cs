@@ -1,5 +1,5 @@
-﻿using CanvasDrawer.Console;
-using CanvasDrawer.Models;
+﻿using CanvasDrawer.Commands;
+using CanvasDrawer.Console;
 using System.Drawing;
 using System.Text;
 
@@ -13,14 +13,14 @@ namespace CanvasDrawer.Drawing
         private const char figureBorder = 'x';
         private readonly IConsoleWriter consoleWriter;
         private char[,]? output;
-        private Canvas? canvas;
+        private CanvasCommand? canvas;
 
         public Drawer(IConsoleWriter consoleWriter)
         {
             this.consoleWriter = consoleWriter;
         }
 
-        private void ApplyCanvas(Canvas canvas)
+        private void ApplyCanvas(CanvasCommand canvas)
         {
             this.canvas = canvas;
             var rectangle = canvas.DrawingValue;
@@ -58,19 +58,19 @@ namespace CanvasDrawer.Drawing
                 ValidateOrThrow(drawingCommand);
             }
 
-            if (command is Canvas canvas)
+            if (command is CanvasCommand canvas)
             {
                 ApplyCanvas(canvas);
             }
-            else if (command is BucketFill bucketFill)
+            else if (command is BucketFillCommand bucketFill)
             {
                 ApplyBucketFill(bucketFill.DrawingValue, bucketFill.Color);
             }
-            else if (command is Models.Rectangle rectangle)
+            else if (command is RectangleCommand rectangle)
             {
                 ApplyRectangle(rectangle.DrawingValue);
             }
-            else if (command is Line line)
+            else if (command is LineCommand line)
             {
                 ApplyRectangle(line.DrawingValue);
             }
@@ -106,13 +106,13 @@ namespace CanvasDrawer.Drawing
             }
         }
 
-        private void ApplyRectangle(System.Drawing.Rectangle figure)
+        private void ApplyRectangle(Rectangle rectangle)
         {
-            for (int x = figure.Left; x <= figure.Right; x++)
+            for (int x = rectangle.Left; x <= rectangle.Right; x++)
             {
-                for (int y = figure.Top; y <= figure.Bottom; y++)
+                for (int y = rectangle.Top; y <= rectangle.Bottom; y++)
                 {
-                    var isRectangleBorderPosition = x == figure.Left || x == figure.Right || y == figure.Bottom || y == figure.Top;
+                    var isRectangleBorderPosition = x == rectangle.Left || x == rectangle.Right || y == rectangle.Bottom || y == rectangle.Top;
                     if (isRectangleBorderPosition)
                     {
                         output[y, x] = figureBorder;

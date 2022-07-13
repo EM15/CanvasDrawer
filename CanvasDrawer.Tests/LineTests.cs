@@ -1,4 +1,5 @@
-﻿using CanvasDrawer.Models;
+﻿using CanvasDrawer.Commands;
+using CanvasDrawer.Exceptions;
 using System;
 using Xunit;
 
@@ -10,7 +11,7 @@ namespace CanvasDrawer.Tests
         public void CreateWithValidCommandShouldBeDoneCorrectly()
         {
             var command = "L 10 20 10 30";
-            var line = new Line(command);
+            var line = new LineCommand(command);
 
             Assert.Equal(command, line.CommandText);
             Assert.Equal(10, line.X1);
@@ -27,7 +28,7 @@ namespace CanvasDrawer.Tests
         public void CreateWithCommandFromRightToLeftShouldBeDoneCorrectly()
         {
             var command = "L 20 20 10 20";
-            var line = new Line(command);
+            var line = new LineCommand(command);
 
             Assert.Equal(20, line.X1);
             Assert.Equal(20, line.Y1);
@@ -43,7 +44,7 @@ namespace CanvasDrawer.Tests
         public void CreateWithCommandFromBottomToTopShouldBeDoneCorrectly()
         {
             var command = "L 10 20 10 10";
-            var line = new Line(command);
+            var line = new LineCommand(command);
 
             Assert.Equal(10, line.X1);
             Assert.Equal(20, line.Y1);
@@ -62,23 +63,29 @@ namespace CanvasDrawer.Tests
         [InlineData("L 10")]
         [InlineData("L 10 20")]
         [InlineData("L 10 20 10")]
-        [InlineData("L 20 20 30 30")] // Diagonal line
         [InlineData("L -20 30 20 40")]
         [InlineData("L 20 -30 20 40")]
         [InlineData("L 20 30 -20 40")]
         [InlineData("L 20 30 20 -40")]
         [InlineData("aL 10 20 10 30")]
         [InlineData("L 10 20 10 30a")]
-        public void CreateWithInvalidCommandsShouldThrowAnArgumentException(string command)
+        public void CreateWithInvalidCommandsShouldThrowAnInvalidCommandException(string command)
         {
-            Assert.Throws<ArgumentException>(() => new Line(command));
+            Assert.Throws<InvalidCommandException>(() => new LineCommand(command));
         }
 
         [Fact]
+        public void CreateDiagonalLineShouldThrowAnArgumentException()
+        {
+            var command = "L 20 20 30 30";
+            Assert.Throws<ArgumentException>(() => new LineCommand(command));
+        }
+
+            [Fact]
         public void CanBeDrawInsideCanvasShouldReturnOkIfItFits()
         {
-            var canvas = new Canvas(20, 20);
-            var line = new Line("L 5 5 5 15");
+            var canvas = new CanvasCommand(20, 20);
+            var line = new LineCommand("L 5 5 5 15");
 
             var canBeDrawInsideCanvas = line.CanBeDrawInsideCanvas(canvas);
             Assert.True(canBeDrawInsideCanvas);
@@ -87,8 +94,8 @@ namespace CanvasDrawer.Tests
         [Fact]
         public void CanBeDrawInsideCanvasShouldReturnOkIfItDoesNotFit()
         {
-            var canvas = new Canvas(20, 20);
-            var line = new Line("L 5 5 5 25");
+            var canvas = new CanvasCommand(20, 20);
+            var line = new LineCommand("L 5 5 5 25");
 
             var canBeDrawInsideCanvas = line.CanBeDrawInsideCanvas(canvas);
             Assert.False(canBeDrawInsideCanvas);

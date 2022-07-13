@@ -1,4 +1,5 @@
-﻿using CanvasDrawer.Models;
+﻿using CanvasDrawer.Commands;
+using CanvasDrawer.Exceptions;
 using System;
 using Xunit;
 
@@ -10,7 +11,7 @@ namespace CanvasDrawer.Tests
         public void CreateWithValidCommandShouldBeDoneCorrectly()
         {
             var command = "B 10 20 c";
-            var bucketFill = new BucketFill(command);
+            var bucketFill = new BucketFillCommand(command);
 
             Assert.Equal(command, bucketFill.CommandText);
             Assert.Equal(10, bucketFill.X);
@@ -30,16 +31,16 @@ namespace CanvasDrawer.Tests
         [InlineData("B 10 20 1")]
         [InlineData("B 10 20 +")]
         [InlineData("aB 10 20 ca")]
-        public void CreateWithInvalidCommandsShouldThrowAnArgumentException(string command)
+        public void CreateWithInvalidCommandsShouldThrowAnInvalidCommandException(string command)
         {
-            Assert.Throws<ArgumentException>(() => new BucketFill(command));
+            Assert.Throws<InvalidCommandException>(() => new BucketFillCommand(command));
         }
 
         [Fact]
         public void CanBeDrawInsideCanvasShouldReturnOkIfItFits()
         {
-            var canvas = new Canvas(20, 20);
-            var bucketFill = new BucketFill("B 1 1 c");
+            var canvas = new CanvasCommand(20, 20);
+            var bucketFill = new BucketFillCommand("B 1 1 c");
 
             var canBeDrawInsideCanvas = bucketFill.CanBeDrawInsideCanvas(canvas);
             Assert.True(canBeDrawInsideCanvas);
@@ -48,8 +49,8 @@ namespace CanvasDrawer.Tests
         [Fact]
         public void CanBeDrawInsideCanvasShouldReturnOkIfItDoesNotFit()
         {
-            var canvas = new Canvas(20, 20);
-            var bucketFill = new BucketFill("B 25 25 c");
+            var canvas = new CanvasCommand(20, 20);
+            var bucketFill = new BucketFillCommand("B 25 25 c");
 
             var canBeDrawInsideCanvas = bucketFill.CanBeDrawInsideCanvas(canvas);
             Assert.False(canBeDrawInsideCanvas);

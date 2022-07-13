@@ -8,6 +8,7 @@ namespace CanvasDrawer.Models
         public int Height { get; private set; }
         public System.Drawing.Rectangle DrawingValue { get; private set; }
 
+        public Canvas(int width, int height) : this($"C {width} {height}") { }
         public Canvas(string command) : base(command)
         {
             var validationRegex = new Regex(@"^C \d+ \d+$");

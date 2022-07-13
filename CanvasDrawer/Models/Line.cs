@@ -10,6 +10,8 @@ namespace CanvasDrawer.Models
         public int Y2 { get; private set; }
         public System.Drawing.Rectangle DrawingValue { get; private set; }
 
+        public Line(int x1, int y1, int x2, int y2) : this($"L {x1} {y1} {x2} {y2}") { }
+
         public Line(string command) : base(command)
         {
             var validationRegex = new Regex(@"^L \d+ \d+ \d+ \d+$");

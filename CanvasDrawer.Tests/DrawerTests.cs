@@ -10,14 +10,14 @@ namespace CanvasDrawer.Tests
 {
     public class DrawerTests
     {
-        //private readonly Drawer drawer;
-        //private readonly IConsoleWriter fakeConsoleWriter;
+        private readonly Drawer drawer;
+        private readonly IConsoleWriter fakeConsoleWriter;
 
-        //public DrawerTests()
-        //{
-        //    fakeConsoleWriter = A.Fake<IConsoleWriter>();
-        //    drawer = new Drawer(fakeConsoleWriter);
-        //}
+        public DrawerTests()
+        {
+            fakeConsoleWriter = A.Fake<IConsoleWriter>();
+            drawer = new Drawer(fakeConsoleWriter);
+        }
 
         //[Fact]
         //public void CanvasShouldBeDrawnCorrectly()

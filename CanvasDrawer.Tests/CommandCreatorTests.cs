@@ -4,7 +4,7 @@ using Xunit;
 
 namespace CanvasDrawer.Tests
 {
-    public class FigureCreatorTests
+    public class CommandCreatorTests
     {
         //private readonly CommandCreator figureCreator = new CommandCreator();
 

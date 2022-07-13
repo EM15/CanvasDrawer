@@ -29,7 +29,6 @@ namespace CanvasDrawer.Tests
             var command = "L 20 20 10 20";
             var line = new Line(command);
 
-            Assert.Equal(command, line.CommandText);
             Assert.Equal(20, line.X1);
             Assert.Equal(20, line.Y1);
             Assert.Equal(10, line.X2);
@@ -46,7 +45,6 @@ namespace CanvasDrawer.Tests
             var command = "L 10 20 10 10";
             var line = new Line(command);
 
-            Assert.Equal(command, line.CommandText);
             Assert.Equal(10, line.X1);
             Assert.Equal(20, line.Y1);
             Assert.Equal(10, line.X2);
@@ -79,7 +77,7 @@ namespace CanvasDrawer.Tests
         [Fact]
         public void CanBeDrawInsideCanvasShouldReturnOkIfItFits()
         {
-            var canvas = new Canvas("C 20 20");
+            var canvas = new Canvas(20, 20);
             var line = new Line("L 5 5 5 15");
 
             var canBeDrawInsideCanvas = line.CanBeDrawInsideCanvas(canvas);
@@ -89,7 +87,7 @@ namespace CanvasDrawer.Tests
         [Fact]
         public void CanBeDrawInsideCanvasShouldReturnOkIfItDoesNotFit()
         {
-            var canvas = new Canvas("C 20 20");
+            var canvas = new Canvas(20, 20);
             var line = new Line("L 5 5 5 25");
 
             var canBeDrawInsideCanvas = line.CanBeDrawInsideCanvas(canvas);

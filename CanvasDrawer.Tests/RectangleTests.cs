@@ -49,7 +49,7 @@ namespace CanvasDrawer.Tests
         [Fact]
         public void CanBeDrawInsideCanvasShouldReturnOkIfItFits()
         {
-            var canvas = new Canvas("C 20 20");
+            var canvas = new Canvas(20, 20);
             var rectangle = new Rectangle("R 5 5 15 15");
 
             var canBeDrawInsideCanvas = rectangle.CanBeDrawInsideCanvas(canvas);
@@ -59,7 +59,7 @@ namespace CanvasDrawer.Tests
         [Fact]
         public void CanBeDrawInsideCanvasShouldReturnOkIfItDoesNotFit()
         {
-            var canvas = new Canvas("C 20 20");
+            var canvas = new Canvas(20, 20);
             var rectangle = new Rectangle("R 5 5 25 25");
 
             var canBeDrawInsideCanvas = rectangle.CanBeDrawInsideCanvas(canvas);

@@ -6,11 +6,12 @@ namespace CanvasDrawer.Commands
 {
     public class CanvasCommand : Command
     {
+        public const char CommandDirective = 'C';
         public int Width { get; private set; }
         public int Height { get; private set; }
         public Rectangle DrawingValue { get; private set; }
 
-        public CanvasCommand(int width, int height) : this($"C {width} {height}") { }
+        public CanvasCommand(int width, int height) : this($"{CommandDirective} {width} {height}") { }
         public CanvasCommand(string command) : base(command)
         {
             var validationRegex = new Regex(@"^C \d+ \d+$");

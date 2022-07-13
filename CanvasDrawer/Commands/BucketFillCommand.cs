@@ -6,12 +6,13 @@ namespace CanvasDrawer.Commands
 {
     public class BucketFillCommand : Command, IDrawingCommand
     {
+        public const char CommandDirective = 'B';
         public int X { get; private set; }
         public int Y { get; private set; }
         public Point DrawingValue { get; private set; }
         public char Color { get; private set; }
 
-        public BucketFillCommand(int x, int y, char color) : this($"B {x} {y} {color}") { }
+        public BucketFillCommand(int x, int y, char color) : this($"{CommandDirective} {x} {y} {color}") { }
         public BucketFillCommand(string command) : base(command)
         {
             var filledAreaRegex = new Regex(@"^B \d+ \d+ [a-zA-Z]$");

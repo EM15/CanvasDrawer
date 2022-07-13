@@ -1,4 +1,5 @@
 ﻿using CanvasDrawer.Commands;
+using CanvasDrawer.Exceptions;
 
 namespace CanvasDrawer.Creators
 {
@@ -8,25 +9,27 @@ namespace CanvasDrawer.Creators
         {
         }
 
-        // TODO: Create and invalidCommandException¿?
         public Command CreateCommand(string commandInputText)
         {
             Command command;
             var commandDirective = commandInputText.FirstOrDefault();
+            
             switch (commandDirective)
             {
-                case 'L':
+                case LineCommand.CommandDirective:
                     command = new LineCommand(commandInputText);
                     break;
-                case 'R':
+                case RectangleCommand.CommandDirective:
                     command = new RectangleCommand(commandInputText);
                     break;
-                case 'B':
+                case BucketFillCommand.CommandDirective:
                     command = new BucketFillCommand(commandInputText);
                     break;
-                default: // Is Canvas
+                case CanvasCommand.CommandDirective:
                     command = new CanvasCommand(commandInputText);
                     break;
+                default:
+                    throw new InvalidCommandException();
             }
 
             return command;

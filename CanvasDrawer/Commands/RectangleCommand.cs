@@ -6,13 +6,15 @@ namespace CanvasDrawer.Commands
 {
     public class RectangleCommand : Command, IDrawingCommand
     {
+        public const char CommandDirective = 'R';
+
         public int X1 { get; private set; }
         public int X2 { get; private set; }
         public int Y1 { get; private set; }
         public int Y2 { get; private set; }
         public Rectangle DrawingValue { get; private set; }
 
-        public RectangleCommand(int x1, int y1, int x2, int y2) : this($"R {x1} {y1} {x2} {y2}") { }
+        public RectangleCommand(int x1, int y1, int x2, int y2) : this($"{CommandDirective} {x1} {y1} {x2} {y2}") { }
 
         public RectangleCommand(string command) : base(command)
         {

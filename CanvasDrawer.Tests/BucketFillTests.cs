@@ -36,21 +36,31 @@ namespace CanvasDrawer.Tests
             Assert.Throws<InvalidCommandException>(() => new BucketFillCommand(command));
         }
 
-        [Fact]
-        public void CanBeDrawInsideCanvasShouldReturnOkIfItFits()
+        [Theory]
+        [InlineData("B 1 1 c")]
+        [InlineData("B 1 4 c")]
+        [InlineData("B 4 1 c")]
+        [InlineData("B 4 4 c")]
+        public void CanBeDrawnInTheBordersShouldReturnOk(string command)
         {
-            var canvas = new CanvasCommand(20, 20);
-            var bucketFill = new BucketFillCommand("B 1 1 c");
+            var canvas = new CanvasCommand(4, 4);
+            var bucketFill = new BucketFillCommand(command);
 
             var canBeDrawnInsideCanvas = bucketFill.CanBeDrawnInsideCanvas(canvas);
             Assert.True(canBeDrawnInsideCanvas);
         }
 
-        [Fact]
-        public void CanBeDrawnInsideCanvasShouldReturnOkIfItDoesNotFit()
+        [Theory]
+        [InlineData("B 0 0 c")]
+        [InlineData("B 0 5 c")]
+        [InlineData("B 5 0 c")]
+        [InlineData("B 5 5 c")]
+        [InlineData("B 1 5 c")]
+        [InlineData("B 5 1 c")]
+        public void CantBeDrawnOutsideTheBorderShouldReturnFalse(string command)
         {
-            var canvas = new CanvasCommand(20, 20);
-            var bucketFill = new BucketFillCommand("B 25 25 c");
+            var canvas = new CanvasCommand(4, 4);
+            var bucketFill = new BucketFillCommand(command);
 
             var canBeDrawnInsideCanvas = bucketFill.CanBeDrawnInsideCanvas(canvas);
             Assert.False(canBeDrawnInsideCanvas);

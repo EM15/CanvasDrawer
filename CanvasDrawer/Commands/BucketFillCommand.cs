@@ -29,6 +29,11 @@ namespace CanvasDrawer.Commands
             DrawingValue = new Point(X, Y);
         }
 
-        public bool CanBeDrawnInsideCanvas(CanvasCommand canvas) => canvas.DrawingValue.Contains(DrawingValue);
+        public bool CanBeDrawnInsideCanvas(CanvasCommand canvas)
+        {
+            // Contains overload using the Point does include the borders
+            var rectangle = new Rectangle(DrawingValue, new Size(0, 0));
+            return canvas.DrawingValue.Contains(rectangle);
+        }
     }
 }

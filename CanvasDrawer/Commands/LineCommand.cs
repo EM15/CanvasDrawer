@@ -18,7 +18,7 @@ namespace CanvasDrawer.Commands
 
         public LineCommand(string command) : base(command)
         {
-            var validationRegex = new Regex(@"^L \d+ \d+ \d+ \d+$");
+            var validationRegex = new Regex(@$"^{CommandDirective} \d+ \d+ \d+ \d+$");
             if (!validationRegex.IsMatch(command))
             {
                 throw new InvalidCommandException();

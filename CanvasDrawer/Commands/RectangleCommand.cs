@@ -18,7 +18,7 @@ namespace CanvasDrawer.Commands
 
         public RectangleCommand(string command) : base(command)
         {
-            var validationRegex = new Regex(@"^R \d+ \d+ \d+ \d+$");
+            var validationRegex = new Regex(@$"^{CommandDirective} \d+ \d+ \d+ \d+$");
             if (!validationRegex.IsMatch(command))
             {
                 throw new InvalidCommandException();

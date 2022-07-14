@@ -15,7 +15,7 @@ namespace CanvasDrawer.Commands
         public BucketFillCommand(int x, int y, char color) : this($"{CommandDirective} {x} {y} {color}") { }
         public BucketFillCommand(string command) : base(command)
         {
-            var filledAreaRegex = new Regex(@"^B \d+ \d+ [a-zA-Z]$");
+            var filledAreaRegex = new Regex(@$"^{CommandDirective} \d+ \d+ [a-zA-Z]$");
             if (!filledAreaRegex.IsMatch(command))
             {
                 throw new InvalidCommandException();

@@ -14,7 +14,7 @@ namespace CanvasDrawer.Commands
         public CanvasCommand(int width, int height) : this($"{CommandDirective} {width} {height}") { }
         public CanvasCommand(string command) : base(command)
         {
-            var validationRegex = new Regex(@"^C \d+ \d+$");
+            var validationRegex = new Regex(@$"^{CommandDirective} \d+ \d+$");
             if (!validationRegex.IsMatch(command))
             {
                 throw new InvalidCommandException();
@@ -31,7 +31,7 @@ namespace CanvasDrawer.Commands
                 throw new ArgumentException("Canvas width/height can't be 0");
             }
 
-            // Followin the example in the documentation
+            // Following the example in the documentation:
             // A Canvas with Width = 2 and Height = 2 means that it will be a rectangle from (1, 1) to (2, 2).
             // That's why we need to substract 1 to Width and Height. If not rectangle would be from (1, 1) to (3, 3)
             DrawingValue = new Rectangle(1, 1, Width - 1, Height - 1);

@@ -42,18 +42,18 @@ namespace CanvasDrawer.Tests
             var canvas = new CanvasCommand(20, 20);
             var bucketFill = new BucketFillCommand("B 1 1 c");
 
-            var canBeDrawInsideCanvas = bucketFill.CanBeDrawInsideCanvas(canvas);
-            Assert.True(canBeDrawInsideCanvas);
+            var canBeDrawnInsideCanvas = bucketFill.CanBeDrawnInsideCanvas(canvas);
+            Assert.True(canBeDrawnInsideCanvas);
         }
 
         [Fact]
-        public void CanBeDrawInsideCanvasShouldReturnOkIfItDoesNotFit()
+        public void CanBeDrawnInsideCanvasShouldReturnOkIfItDoesNotFit()
         {
             var canvas = new CanvasCommand(20, 20);
             var bucketFill = new BucketFillCommand("B 25 25 c");
 
-            var canBeDrawInsideCanvas = bucketFill.CanBeDrawInsideCanvas(canvas);
-            Assert.False(canBeDrawInsideCanvas);
+            var canBeDrawnInsideCanvas = bucketFill.CanBeDrawnInsideCanvas(canvas);
+            Assert.False(canBeDrawnInsideCanvas);
         }
     }
 }

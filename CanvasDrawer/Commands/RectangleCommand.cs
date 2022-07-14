@@ -39,6 +39,6 @@ namespace CanvasDrawer.Commands
             DrawingValue = new Rectangle(X1, Y1, X2 - X1, Y2 - Y1);
         }
 
-        public bool CanBeDrawInsideCanvas(CanvasCommand canvas) => canvas.DrawingValue.Contains(DrawingValue);
+        public bool CanBeDrawnInsideCanvas(CanvasCommand canvas) => canvas.DrawingValue.Contains(DrawingValue);
     }
 }

@@ -87,8 +87,8 @@ namespace CanvasDrawer.Tests
             var canvas = new CanvasCommand(20, 20);
             var line = new LineCommand("L 5 5 5 15");
 
-            var canBeDrawInsideCanvas = line.CanBeDrawInsideCanvas(canvas);
-            Assert.True(canBeDrawInsideCanvas);
+            var canBeDrawnInsideCanvas = line.CanBeDrawnInsideCanvas(canvas);
+            Assert.True(canBeDrawnInsideCanvas);
         }
 
         [Fact]
@@ -97,8 +97,8 @@ namespace CanvasDrawer.Tests
             var canvas = new CanvasCommand(20, 20);
             var line = new LineCommand("L 5 5 5 25");
 
-            var canBeDrawInsideCanvas = line.CanBeDrawInsideCanvas(canvas);
-            Assert.False(canBeDrawInsideCanvas);
+            var canBeDrawnInsideCanvas = line.CanBeDrawnInsideCanvas(canvas);
+            Assert.False(canBeDrawnInsideCanvas);
         }
     }
 }

@@ -45,6 +45,6 @@ namespace CanvasDrawer.Commands
             DrawingValue = new Rectangle(x, y, width, height);
         }
 
-        public bool CanBeDrawInsideCanvas(CanvasCommand canvas) => canvas.DrawingValue.Contains(DrawingValue);
+        public bool CanBeDrawnInsideCanvas(CanvasCommand canvas) => canvas.DrawingValue.Contains(DrawingValue);
     }
 }

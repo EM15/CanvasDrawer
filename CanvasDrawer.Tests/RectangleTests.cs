@@ -54,23 +54,23 @@ namespace CanvasDrawer.Tests
         }
 
         [Fact]
-        public void CanBeDrawInsideCanvasShouldReturnOkIfItFits()
+        public void CanBeDrawnInsideCanvasShouldReturnOkIfItFits()
         {
             var canvas = new CanvasCommand(20, 20);
             var rectangle = new RectangleCommand("R 5 5 15 15");
 
-            var canBeDrawInsideCanvas = rectangle.CanBeDrawInsideCanvas(canvas);
-            Assert.True(canBeDrawInsideCanvas);
+            var canBeDrawnInsideCanvas = rectangle.CanBeDrawnInsideCanvas(canvas);
+            Assert.True(canBeDrawnInsideCanvas);
         }
 
         [Fact]
-        public void CanBeDrawInsideCanvasShouldReturnOkIfItDoesNotFit()
+        public void CanBeDrawnInsideCanvasShouldReturnOkIfItDoesNotFit()
         {
             var canvas = new CanvasCommand(20, 20);
             var rectangle = new RectangleCommand("R 5 5 25 25");
 
-            var canBeDrawInsideCanvas = rectangle.CanBeDrawInsideCanvas(canvas);
-            Assert.False(canBeDrawInsideCanvas);
+            var canBeDrawnInsideCanvas = rectangle.CanBeDrawnInsideCanvas(canvas);
+            Assert.False(canBeDrawnInsideCanvas);
         }
     }
 }

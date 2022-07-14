@@ -31,7 +31,10 @@ namespace CanvasDrawer.Commands
                 throw new ArgumentException("Canvas width/height can't be 0");
             }
 
-            DrawingValue = new Rectangle(1, 1, Width, Height);
+            // Followin the example in the documentation
+            // A Canvas with Width = 2 and Height = 2 means that it will be a rectangle from (1, 1) to (2, 2).
+            // That's why we need to substract 1 to Width and Height. If not rectangle would be from (1, 1) to (3, 3)
+            DrawingValue = new Rectangle(1, 1, Width - 1, Height - 1);
         }
     }
 }

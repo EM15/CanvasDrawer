@@ -92,7 +92,7 @@ namespace CanvasDrawer.Tests
         public void OutputShouldBeTheOneExpected2()
         {
             A.CallTo(() => fakeConsoleReader.ReadLine())
-                .ReturnsNextFromSequence("R 1 1 2 2", "L 1 1 2 1", "B 1 1 c", "C 4 4", "R 1 1 5 5", "L 1 1 6 1", "B 5 5 c", "Q");
+                .ReturnsNextFromSequence("R 1 1 2 2", "L 1 1 2 1", "B 1 1 c", "C 4 4", "R 1 1 5 5", "L 1 1 5 1", "B 5 5 c", "Q");
 
             var output1 = new StringBuilder();
             output1.AppendLine("------");
@@ -151,22 +151,44 @@ namespace CanvasDrawer.Tests
             output3.AppendLine("|x   |");
             output3.AppendLine("------");
 
+            var output4 = new StringBuilder();
+            output4.AppendLine("------");
+            output4.AppendLine("|ZZZZ|");
+            output4.AppendLine("|xZZZ|");
+            output4.AppendLine("|xxxx|");
+            output4.AppendLine("|x   |");
+            output4.AppendLine("------");
+
+            var output5 = new StringBuilder();
+            output5.AppendLine("-------");
+            output5.AppendLine("|     |");
+            output5.AppendLine("|     |");
+            output5.AppendLine("|     |");
+            output5.AppendLine("|     |");
+            output5.AppendLine("|     |");
+            output5.AppendLine("-------");
+
+            var output6 = new StringBuilder();
+            output6.AppendLine("-------");
+            output6.AppendLine("|xxxx |");
+            output6.AppendLine("|     |");
+            output6.AppendLine("|     |");
+            output6.AppendLine("|     |");
+            output6.AppendLine("|     |");
+            output6.AppendLine("-------");
+
             executor.Execute();
 
             InsertCommand
-                .Then(CanvasNotInitialized)
-                .Then(InsertCommand)
-                .Then(CanvasNotInitialized)
-                .Then(InsertCommand)
-                .Then(CanvasNotInitialized)
-                .Then(InsertCommand)
                 .Then(Output(output1))
                 .Then(InsertCommand)
-                .Then(CantDrawInsideCanvas)
+                .Then(Output(output2))
                 .Then(InsertCommand)
-                .Then(CantDrawInsideCanvas)
+                .Then(Output(output3))
                 .Then(InsertCommand)
-                .Then(CantDrawInsideCanvas)
+                .Then(Output(output4))
+                .Then(InsertCommand)
+                .Then(Output(output5))
                 .Then(InsertCommand);
         }
     }

@@ -18,8 +18,8 @@ namespace CanvasDrawer.Tests
             Assert.Equal(30, canvas.Height);
             Assert.Equal(1, canvas.DrawingValue.X);
             Assert.Equal(1, canvas.DrawingValue.Y);
-            Assert.Equal(20, canvas.DrawingValue.Width);
-            Assert.Equal(30, canvas.DrawingValue.Height);
+            Assert.Equal(19, canvas.DrawingValue.Width);
+            Assert.Equal(29, canvas.DrawingValue.Height);
         }
 
         [Theory]

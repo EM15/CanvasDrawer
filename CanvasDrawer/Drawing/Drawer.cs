@@ -25,7 +25,7 @@ namespace CanvasDrawer.Drawing
             this.canvas = canvas;
             var rectangle = canvas.DrawingValue;
 
-            output = new char[rectangle.Height + 2, rectangle.Width + 2];
+            output = new char[rectangle.Bottom + 2, rectangle.Right + 2];
             var yLength = output.GetLength(0);
             var xLength = output.GetLength(1);
             for (int y = 0; y < yLength; y++)

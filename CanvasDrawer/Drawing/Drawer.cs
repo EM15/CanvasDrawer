@@ -25,21 +25,25 @@ namespace CanvasDrawer.Drawing
             this.canvas = canvas;
             var rectangle = canvas.DrawingValue;
 
-            output = new char[rectangle.Bottom + 2, rectangle.Right + 2];
-            var yLength = output.GetLength(0);
-            var xLength = output.GetLength(1);
-            for (int y = 0; y < yLength; y++)
+            // If Canvas is a Rectangle from (1, 1) to (2, 2) it's width/height is 1.
+            // From x1 = 1 to x2 = 2 the distance is 1. But there are two points.
+            // We need to sum 3: two for the delimeters and one for the extra point.
+            var xPoints = rectangle.Width + 3;
+            var yPoints = rectangle.Height + 3;
+            output = new char[yPoints, xPoints];
+
+            for (int y = 0; y < yPoints; y++)
             {
-                for (int x = 0; x < xLength; x++)
+                for (int x = 0; x < xPoints; x++)
                 {
-                    var isCanvasBorderTopOrBottom = y == 0 || y == yLength - 1;
+                    var isCanvasBorderTopOrBottom = y == 0 || y == yPoints - 1;
                     if (isCanvasBorderTopOrBottom)
                     {
                         output[y, x] = canvasTopBottomDelimiter;
                         continue;
                     }
 
-                    var isCanvasBorderLeftOrRight = y != 0 && y != yLength - 1 && (x == 0 || x == xLength - 1);
+                    var isCanvasBorderLeftOrRight = y != 0 && y != yPoints - 1 && (x == 0 || x == xPoints - 1);
                     if (isCanvasBorderLeftOrRight)
                     {
                         output[y, x] = canvasLeftRightDelimiter;

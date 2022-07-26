@@ -37,6 +37,12 @@ namespace CanvasDrawer.Tests
             Assert.IsType<BucketFillCommand>(command);
         }
 
+        public void UndoCommandShouldBeCreatedCorrectly()
+        {
+            var command = commandCreator.CreateCommand("U");
+            Assert.IsType<UndoCommand>(command);
+        }
+
         [Theory]
         [InlineData(null)]
         [InlineData("")]

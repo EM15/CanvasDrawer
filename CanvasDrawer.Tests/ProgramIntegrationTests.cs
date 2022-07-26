@@ -191,5 +191,37 @@ namespace CanvasDrawer.Tests
                 .Then(Output(output5))
                 .Then(InsertCommand);
         }
+
+        [Fact]
+        public void OutputShouldBeTheOneExpected_WithUndo()
+        {
+            A.CallTo(() => fakeConsoleReader.ReadLine())
+                .ReturnsNextFromSequence("C 4 4", "L 1 2 1 4", "U", "Q");
+
+            var output1 = new StringBuilder();
+            output1.AppendLine("------");
+            output1.AppendLine("|    |");
+            output1.AppendLine("|    |");
+            output1.AppendLine("|    |");
+            output1.AppendLine("|    |");
+            output1.AppendLine("------");
+
+            var output2 = new StringBuilder();
+            output2.AppendLine("------");
+            output2.AppendLine("|    |");
+            output2.AppendLine("|x   |");
+            output2.AppendLine("|x   |");
+            output2.AppendLine("|x   |");
+            output2.AppendLine("------");
+
+            executor.Execute();
+
+            InsertCommand
+                .Then(Output(output1))
+                .Then(InsertCommand)
+                .Then(Output(output2))
+                .Then(InsertCommand)
+                .Then(Output(output1));
+        }
     }
 }

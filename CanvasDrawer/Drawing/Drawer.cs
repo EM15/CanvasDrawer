@@ -12,7 +12,7 @@ namespace CanvasDrawer.Drawing
         private const char emptySpace = ' ';
         private const char figureBorder = 'x';
         private readonly IConsoleWriter consoleWriter;
-        private char[,]? output;
+        private List<char[,]> outputList = new List<char[,]>();
         private CanvasCommand? canvas;
 
         public Drawer(IConsoleWriter consoleWriter)
@@ -30,7 +30,7 @@ namespace CanvasDrawer.Drawing
             // We need to sum 3: two for the delimeters and one for the extra point.
             var xPoints = rectangle.Width + 3;
             var yPoints = rectangle.Height + 3;
-            output = new char[yPoints, xPoints];
+            var output = new char[yPoints, xPoints];
 
             for (int y = 0; y < yPoints; y++)
             {
@@ -53,6 +53,8 @@ namespace CanvasDrawer.Drawing
                     output[y, x] = emptySpace;
                 }
             }
+
+            outputList.Add(output);
         }
 
         public void Draw(Command command)
@@ -78,12 +80,29 @@ namespace CanvasDrawer.Drawing
             {
                 ApplyRectangle(line.DrawingValue);
             }
+            else if (command is UndoCommand undo)
+            {
+                ApplyUndo();
+            }
 
             WriteOutput();
         }
 
+        private void ApplyUndo()
+        {
+            if (!outputList.Any())
+            {
+                throw new Exception("There's nothing to undo");
+            }
+
+            outputList.RemoveAt(outputList.Count - 1);
+        }
+
         private void ApplyBucketFill(Point point, char color)
         {
+            var output = (char[,])outputList.Last().Clone();
+            outputList.Add(output);
+
             var initialValue = output[point.Y, point.X];
             TryApplyColorInAllDirections(point, color, initialValue);
         }
@@ -102,6 +121,7 @@ namespace CanvasDrawer.Drawing
 
         private void TryApplyColor(Point point, char color, char initialValue)
         {
+            var output = outputList.Last();
             var currentValue = output[point.Y, point.X];
             if (currentValue == initialValue)
             {
@@ -112,6 +132,7 @@ namespace CanvasDrawer.Drawing
 
         private void ApplyRectangle(Rectangle rectangle)
         {
+            var output = (char[,])outputList.Last().Clone();
             for (int x = rectangle.Left; x <= rectangle.Right; x++)
             {
                 for (int y = rectangle.Top; y <= rectangle.Bottom; y++)
@@ -123,11 +144,18 @@ namespace CanvasDrawer.Drawing
                     }
                 }
             }
+            outputList.Add(output);
         }
 
         private void WriteOutput()
         {
+            if (outputList.Count == 0)
+            {
+                return;
+            }
+
             var sbOutput = new StringBuilder();
+            var output = outputList.LastOrDefault();
 
             for (int y = 0; y < output.GetLength(0); y++)
             {

@@ -29,6 +29,9 @@ namespace CanvasDrawer.Creators
                 case CanvasCommand.CommandDirective:
                     command = new CanvasCommand(commandInputText);
                     break;
+                case UndoCommand.UndoDirective:
+                    command = new UndoCommand(commandInputText);
+                    break;
                 default:
                     throw new InvalidCommandException();
             }
